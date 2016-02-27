@@ -14,7 +14,7 @@ if(isset($_GET['Team'])){$Team = filter_var($_GET['Team'], FILTER_SANITIZE_NUMBE
 
 If (file_exists($DatabaseFile) == false){
 	$Team = 0;
-	$TeamName = "Database File Not Found";
+	$TeamName = $DatabaseNotFound;
 }else{
 	$db = new SQLite3($DatabaseFile);
 }
@@ -297,7 +297,7 @@ for($Status = 3; $Status >= 2; $Status--){
 			echo "<td>";if  ($Row['PosLW']== "True"){ echo "X";}; echo"</td>";
 			echo "<td>";if  ($Row['PosRW']== "True"){ echo "X";}; echo"</td>";
 			echo "<td>";if  ($Row['PosD']== "True"){ echo "X";}; echo"</td>";		
-			echo "<td>";if  ($Row <> Null){echo number_format($Row['ConditionDecimal'],2);}; echo"</td>";
+			echo "<td>";if  ($Row <> Null){echo number_format(str_replace(",",".",$Row['ConditionDecimal']),2);}; echo"</td>";
 			echo "<td>" . $Row['CK'] . "</td>";
 			echo "<td>" . $Row['FG'] . "</td>";
 			echo "<td>" . $Row['DI'] . "</td>";
@@ -384,7 +384,7 @@ for($Status = 3; $Status >= 2; $Status--){
 		$strTemp = (string)$Row['Name'];
 		if ($Row['Rookie']== "True"){ $strTemp = $strTemp . " (R)";}
 		echo "<td><a href=\"GoalieReport.php?Goalie=" . $Row['Number'] . "\">" . $strTemp . "</a></td>";
-		echo "<td>";if  ($Row <> Null){echo number_format($Row['ConditionDecimal'],2);}; echo"</td>";
+		echo "<td>";if  ($Row <> Null){echo number_format(str_replace(",",".",$Row['ConditionDecimal']),2);}; echo"</td>";
 		echo "<td>" . $Row['SK'] . "</td>";
 		echo "<td>" . $Row['DU'] . "</td>";
 		echo "<td>" . $Row['EN'] . "</td>";
@@ -445,6 +445,7 @@ echo "<td>" . Round($GoalieRosterAverage['AvgOfOverall']). "</td>";
 <th title="Salary" class="STHSW100">Salary</th>
 </thead><tbody>
 <?php
+If (Count($CoachInfo) == 1){
 	echo "<tr><td>" . $CoachInfo['Name'] . "</td>";
 	echo "<td>" . $CoachInfo['PH'] . "</td>";
 	echo "<td>" . $CoachInfo['DF'] . "</td>";
@@ -457,6 +458,7 @@ echo "<td>" . Round($GoalieRosterAverage['AvgOfOverall']). "</td>";
 	echo "<td>" . $CoachInfo['Age'] . "</td>";
 	echo "<td>" . $CoachInfo['Contract'] . "</td>";
 	echo "<td>" . number_format($CoachInfo['Salary'],0) . "$</td></tr>";
+}
 ?>
 </tbody></table>
 
@@ -1174,7 +1176,7 @@ echo "<td>" . $TeamFinance['TeamPopularity'] . "</td>";
 <?php 
 echo "<td>" . number_Format($TeamFinance['TotalPlayersSalaries'],0) . "$</td>\n";
 echo "<td>" . number_Format($TeamFinance['TotalPlayersSalariesAverage'],0) . "$</td>\n";
-echo "<td>" . number_Format($CoachInfo['Salary'],0) . "$</td>\n";
+echo "<td>";If (Count($CoachInfo) == 1){echo number_Format($CoachInfo['Salary'],0) . "$";};echo "0$</td>\n";
 echo "<td>" . number_Format($TeamFinance['SpecialSalaryCapY1'],0) . "$</td>\n";
 ?>
 </tr></table>
@@ -1218,7 +1220,12 @@ echo "<td>" . number_Format($TeamFinance['ProjectedBankAccount'],0) . "$</td>\n"
 <tr><td class="STHSAlignTop">
 <table class="STHSPHPTeamStatDepthChart_Table">
 <?php
-if (empty($PlayerDepthChart) == false){while ($Row = $PlayerDepthChart ->fetchArray()) {
+$PlayerDepthChartC = $PlayerDepthChart;
+$PlayerDepthChartLW = $PlayerDepthChart;
+$PlayerDepthChartRW = $PlayerDepthChart;
+$PlayerDepthChartD = $PlayerDepthChart;
+
+if (empty($PlayerDepthChartC) == false){while ($Row = $PlayerDepthChartC ->fetchArray()) {
 	If ($Row['PosLW']== "True"){
 		echo "<tr><td class=\"STHSW140\">";
 		If ($Row['Rookie']== "True"){echo "*";}
@@ -1234,7 +1241,7 @@ if (empty($PlayerDepthChart) == false){while ($Row = $PlayerDepthChart ->fetchAr
 </td><td class="STHSAlignTop">
 <table class="STHSPHPTeamStatDepthChart_Table">
 <?php
-if (empty($PlayerDepthChart) == false){while ($Row = $PlayerDepthChart ->fetchArray()) {
+if (empty($PlayerDepthChartLW) == false){while ($Row = $PlayerDepthChartLW ->fetchArray()) {
 	If ($Row['PosC']== "True"){
 		echo "<tr><td class=\"STHSW140\">";
 		If ($Row['Rookie']== "True"){echo "*";}
@@ -1250,7 +1257,7 @@ if (empty($PlayerDepthChart) == false){while ($Row = $PlayerDepthChart ->fetchAr
 </td><td class="STHSAlignTop">
 <table class="STHSPHPTeamStatDepthChart_Table">
 <?php
-if (empty($PlayerDepthChart) == false){while ($Row = $PlayerDepthChart ->fetchArray()) {
+if (empty($PlayerDepthChartRW) == false){while ($Row = $PlayerDepthChartRW ->fetchArray()) {
 	If ($Row['PosRW']== "True"){
 		echo "<tr><td class=\"STHSW140\">";
 		If ($Row['Rookie']== "True"){echo "*";}
@@ -1273,7 +1280,7 @@ $NumOfD = (integer)0;
 $Count = (integer)0;
 if (empty($PlayerDepthChart) == false){while ($Row = $PlayerDepthChart ->fetchArray()) {If ($Row['PosD']== "True"){$NumOfD++;}}}
 $NumOfD = Round($NumOfD / 2);
-if (empty($PlayerDepthChart) == false){while ($Row = $PlayerDepthChart ->fetchArray()) {
+if (empty($PlayerDepthChartD) == false){while ($Row = $PlayerDepthChartD ->fetchArray()) {
 	If ($Row['PosD']== "True"){
 		echo "<tr><td class=\"STHSW140\">";
 		If ($Row['Rookie']== "True"){echo "*";}

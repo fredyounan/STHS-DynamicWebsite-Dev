@@ -2,10 +2,10 @@
 <?php
 $Title = (string)"";
 If (file_exists($DatabaseFile) == false){
-	$LeagueName = "Database File Not Found";
+	$LeagueName = $DatabaseNotFound;
 	$TeamStat = Null;
-	echo "<title>Database File Not Found</title>";
-	$Title = "Database File Not Found";
+	echo "<title>" . $DatabaseNotFound . "</title>";
+	$Title = $DatabaseNotFound;
 }else{
 	$DESCQuery = (boolean)FALSE;/* The SQL Query must be Descending Order and not Ascending*/
 	$TypeText = (string)"Pro";
@@ -94,11 +94,11 @@ If (file_exists($DatabaseFile) == false){
 	
 	If ($Team == 0){
 		$Query = "SELECT Team" . $TypeText . "Stat.* FROM Team" . $TypeText . "Stat ORDER BY Team" . $TypeText . "Stat.". $OrderByField;
-		$Title = $TypeText . " Team Stats";
+		$Title = $TypeText . $DynamicTitleLang['TeamStat'];
 	}else{
 		$Query = "SELECT Name FROM Team" . $TypeText . "Info WHERE Number = " . $Team ;
 		$TeamName = $db->querySingle($Query);
-		$Title = $TeamName . " " . $TypeText . " Team Stats VS";
+		$Title = $TeamName . " " . $TypeText . $DynamicTitleLang['TeamStatVS'];
 		If ($OrderByField == "Name"){$OrderByField = "TeamVSName";}
 		$Query = "SELECT Team" . $TypeText . "StatVS.* FROM Team" . $TypeText . "StatVS WHERE GP > 0 AND TeamNumber = " . $Team . " ORDER BY Team" . $TypeText . "StatVS." . $OrderByField;
 	}
@@ -106,10 +106,10 @@ If (file_exists($DatabaseFile) == false){
 	/* Order by  */
 	If ($DESCQuery == TRUE){
 		$Query = $Query . " DESC";
-		$Title = $Title . " In Decending Order By " . $OrderByFieldText;
+		$Title = $Title . $DynamicTitleLang['InDecendingOrderBy'] . $OrderByFieldText;
 	}else{
 		$Query = $Query . " ASC";
-		$Title = $Title . " In Ascending Order By " . $OrderByFieldText;
+		$Title = $Title . $DynamicTitleLang['InAscendingOrderBy'] . $OrderByFieldText;
 	}
 
 	echo "<title>" . $LeagueName . " - " . $Title . "</title>";
@@ -135,7 +135,7 @@ $(function() {
       columnSelector_mediaqueryHidden: true,
       columnSelector_breakpoints : [ '50em', '60em', '70em', '80em', '90em', '95em' ],
 	  filter_columnFilters: true,
-      filter_placeholder: { search : 'Search' },
+      filter_placeholder: { search : '<?php echo $TableSorterLang['Search'];?>' },
 	  filter_searchDelay : 500,	  
       filter_reset: '.tablesorter_Reset'	 
     }
@@ -147,11 +147,11 @@ $(function() {
 
 <div class="tablesorter_ColumnSelectorWrapper">
     <input id="tablesorter_colSelect1" type="checkbox" class="hidden">
-    <label class="tablesorter_ColumnSelectorButton" for="tablesorter_colSelect1">Show or Hide Column</label>
+    <label class="tablesorter_ColumnSelectorButton" for="tablesorter_colSelect1"><?php echo $TableSorterLang['ShoworHideColumn'];?></label>
     <div id="tablesorter_ColumnSelector" class="tablesorter_ColumnSelector"></div>
-    <button class="tablesorter_Reset" type="button">Reset Search Filter</button>
-	<div class="tablesorter_Reset FilterTipMain">Filter Tips
-	<table class="FilterTip"><thead><tr><th style="width:55px">Priority</th><th style="width:100px">Type</th><th style="width:485px">Description</th></tr></thead>
+    <button class="tablesorter_Reset" type="button"><?php echo $TableSorterLang['ResetAllSearchFilter'];?></button>
+	<div class="tablesorter_Reset FilterTipMain"><?php echo $TableSorterLang['FilterTips'];?>
+	<table class="FilterTip"><thead><tr><th style="width:55px">Priority</th><th style="width:100px"><?php echo $PlayersLang['Type'];?></th><th style="width:485px">Description</th></tr></thead>
 		<tbody>
 			<tr><td class="STHSCenter">1</td><td><code>|</code> or <code>&nbsp;OR&nbsp;</code></td><td>Logical &quot;or&quot; (Vertical bar). Filter the column for content that matches text from either side of the bar</td></tr>
 			<tr><td class="STHSCenter">2</td><td><code>&nbsp;&&&nbsp;</code> or <code>&nbsp;AND&nbsp;</code></td><td>Logical &quot;and&quot;. Filter the column for content that matches text from either side of the operator.</td></tr>
@@ -170,8 +170,8 @@ $(function() {
 </div>
 
 <table class="tablesorter custom-popup STHSPHPTeamsStat_Table"><thead><tr>
-<th class="sorter-false"></th><th class="sorter-false" colspan="10">Overall</th><th class="sorter-false" colspan="10">Home</th><th class="sorter-false" colspan="10">Visitor</th><th class="sorter-false" colspan="41"></th></tr><tr>
-<th data-priority="critical" title="Team Name" class="STHSW200"><?php If ($Team <> 0){echo "VS ";}?>Team</th>
+<th class="sorter-false"></th><th class="sorter-false" colspan="10"><?php echo $TeamStatLang['Overall'];?></th><th class="sorter-false" colspan="10"><?php echo $TeamStatLang['Home'];?></th><th class="sorter-false" colspan="10"><?php echo $TeamStatLang['Visitor'];?></th><th class="sorter-false" colspan="41"></th></tr><tr>
+<th data-priority="critical" title="Team Name" class="STHSW200"><?php If ($Team <> 0){echo "VS ";}?><?php echo $TeamStatLang['TeamName'];?></th>
 <th data-priority="1" title="Overall Games Played" class="STHSW25">GP</th>
 <th data-priority="1" title="Overall Wins" class="STHSW25">W</th>
 <th data-priority="1" title="Overall Loss" class="STHSW25">L</th>

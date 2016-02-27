@@ -1,4 +1,4 @@
-<?php include "Header.php";?>
+﻿<?php include "Header.php";?>
 <?php
 /*
 Syntax to call this webpage should be GoaliesStat.php?Goalie=2 where only the number change and it's based on the UniqueID of Goalies.
@@ -12,7 +12,7 @@ if($_GET){$Goalie = filter_var($_GET['Goalie'], FILTER_SANITIZE_NUMBER_INT);}
 
 If (file_exists($DatabaseFile) == false){
 	$Goalie = 0;
-	$GoalieName = "Database File Not Found";
+	$GoalieName = $DatabaseNotFound;
 }else{
 	$db = new SQLite3($DatabaseFile);
 }
@@ -64,7 +64,7 @@ echo "<title>" . $LeagueName . " - " . $GoalieName . "</title>";
 	<th>Weight</th>
 </tr><tr>
 	<td><?php echo $GoalieInfo['Age']; ?></td>	
-	<td><?php if ($GoalieInfo <> Null){echo number_format($GoalieInfo['ConditionDecimal'],2);} ?></td>	
+	<td><?php if ($GoalieInfo <> Null){echo number_format(str_replace(",",".",$GoalieInfo['ConditionDecimal']),2);} ?></td>	
 	<td><?php echo $GoalieInfo['Suspension']; ?></td>	
 	<td><?php echo $GoalieInfo['Height']; ?></td>
 	<td><?php echo $GoalieInfo['Weight']; ?></td>

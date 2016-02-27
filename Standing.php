@@ -5,11 +5,11 @@ $Title = (string)"";
 $DatabaseFound = (boolean)False;
 If (file_exists($DatabaseFile) == false){
 	$DatabaseFound = False;
-	$LeagueName = "Database File Not Found";
+	$LeagueName = $DatabaseNotFound;
 	$Standing = Null;
 	$LeagueGeneral = Null;
-	echo "<title>Database File Not Found</title>";
-	$Title = "Database File Not Found";
+	echo "<title>" . $DatabaseNotFound . "</title>";
+	$Title = $DatabaseNotFound;
 }else{
 	$DatabaseFound = True;
 	$Title = (string)"";
@@ -168,7 +168,7 @@ If ($DatabaseFound == True){
 
 	/* Division 4 */
 	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">" . $LeagueGeneral['DivisionName4'] . "</td></tr>";
-	$Query = " SELECT Team" . $TypeText . "Stat.*, Team" . $TypeText . "Info.Conference, Team" . $TypeText . "Info.Division, RankingOrder.Type FROM (Team" . $TypeText . "Stat INNER JOIN Team" . $TypeText . "Info ON Team" . $TypeText . "Stat.Number = Team" . $TypeText . "Info.Number) INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((Team" . $TypeText . "Info.Division)=\"" . $LeagueGeneral['DivisionName4'] . "\") AND ((RankingOrder.Type)=1)) ORDER BY RankingOrder.TeamOrder LIMIT 3";
+	$Query = " SELECT Team" . $TypeText . "Stat.*, Team" . $TypeText . "Info.Conference, Team" . $TypeText . "Info.Division, RankingOrder.Type FROM (Team" . $TypeText . "Stat INNER JOIN Team" . $TypeText . "Info ON Team" . $TypeText . "Stat.Number = Team" . $TypeText . "Info.Number) INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((Team" . $TypeText . "Info.Division)=\"" . $LeagueGeneral['DivisionName4'] . "\") AND ((RankingOrder.Type)=2)) ORDER BY RankingOrder.TeamOrder LIMIT 3";
 	$Standing = $db->query($Query);
 	$LoopCount =0;
 	if (empty($Standing) == false){while ($row = $Standing ->fetchArray()) {
@@ -178,7 +178,7 @@ If ($DatabaseFound == True){
 		
 	/* Division 5 */	
 	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">" . $LeagueGeneral['DivisionName5'] . "</td></tr>";
-	$Query = " SELECT Team" . $TypeText . "Stat.*, Team" . $TypeText . "Info.Conference, Team" . $TypeText . "Info.Division, RankingOrder.Type FROM (Team" . $TypeText . "Stat INNER JOIN Team" . $TypeText . "Info ON Team" . $TypeText . "Stat.Number = Team" . $TypeText . "Info.Number) INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((Team" . $TypeText . "Info.Division)=\"" . $LeagueGeneral['DivisionName5'] . "\") AND ((RankingOrder.Type)=1)) ORDER BY RankingOrder.TeamOrder LIMIT 3";
+	$Query = " SELECT Team" . $TypeText . "Stat.*, Team" . $TypeText . "Info.Conference, Team" . $TypeText . "Info.Division, RankingOrder.Type FROM (Team" . $TypeText . "Stat INNER JOIN Team" . $TypeText . "Info ON Team" . $TypeText . "Stat.Number = Team" . $TypeText . "Info.Number) INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((Team" . $TypeText . "Info.Division)=\"" . $LeagueGeneral['DivisionName5'] . "\") AND ((RankingOrder.Type)=2)) ORDER BY RankingOrder.TeamOrder LIMIT 3";
 	$Standing = $db->query($Query);
 	$LoopCount =0;
 	if (empty($Standing) == false){while ($row = $Standing ->fetchArray()) {
@@ -186,9 +186,9 @@ If ($DatabaseFound == True){
 		PrintStandingTableRow($row, $TypeText, $LeagueGeneral['PointSystemW'], $LoopCount);
 	}}
 
-	/* Overall for Conference 12 */	
+	/* Overall for Conference 2 */	
 	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">Wildcard</td></tr>";
-	$Query = " SELECT Team" . $TypeText . "Stat.*, Team" . $TypeText . "Info.Conference, Team" . $TypeText . "Info.Division, RankingOrder.Type FROM (Team" . $TypeText . "Stat INNER JOIN Team" . $TypeText . "Info ON Team" . $TypeText . "Stat.Number = Team" . $TypeText . "Info.Number) INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((Team" . $TypeText . "Info.Conference)=\"" . $LeagueGeneral['ConferenceName2'] . "\") AND ((RankingOrder.Type)=1)) ORDER BY RankingOrder.TeamOrder";
+	$Query = " SELECT Team" . $TypeText . "Stat.*, Team" . $TypeText . "Info.Conference, Team" . $TypeText . "Info.Division, RankingOrder.Type FROM (Team" . $TypeText . "Stat INNER JOIN Team" . $TypeText . "Info ON Team" . $TypeText . "Stat.Number = Team" . $TypeText . "Info.Number) INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((Team" . $TypeText . "Info.Conference)=\"" . $LeagueGeneral['ConferenceName2'] . "\") AND ((RankingOrder.Type)=2)) ORDER BY RankingOrder.TeamOrder";
 	$Standing = $db->query($Query);
 	$LoopCount =0;
 	if (empty($Standing) == false){while ($row = $Standing ->fetchArray()) {

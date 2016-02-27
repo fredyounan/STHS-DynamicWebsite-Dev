@@ -3,10 +3,10 @@
 $Team = (integer)-1; /* -1 All Team */
 $Title = (string)"";
 If (file_exists($DatabaseFile) == false){
-	$LeagueName = "Database File Not Found";
+	$LeagueName = $DatabaseNotFound;
 	$PlayerStat = Null;
-	echo "<title>Database File Not Found</title>";
-	$Title = "Database File Not Found";
+	echo "<title>" . $DatabaseNotFound . "</title>";
+	$Title = $DatabaseNotFound;
 }else{
 	$ProOrNot = (boolean)TRUE; /* TRUE = Pro League --- FALSE = Farm League */
 	$ACSQuery = (boolean)FALSE;/* The SQL Query must be Ascending Order and not Descending */
@@ -81,7 +81,7 @@ If (file_exists($DatabaseFile) == false){
 	$Query = "Select Name from LeagueGeneral";
 	$LeagueGeneral = $db->querySingle($Query,true);		
 	$LeagueName = $LeagueGeneral['Name'];
-	If($MaximumResult == 0){$Title = "All ";}else{$Title = "Top " .$MaximumResult . " ";}
+	If($MaximumResult == 0){$Title = $DynamicTitleLang['All'];}else{$Title = $DynamicTitleLang['Top'] . $MaximumResult . " ";}
 	If ($ProOrNot == TRUE){
 		/* Pro Query */
 		$Query = "SELECT PlayerProStat.*, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.TeamName, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG,ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT,ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE PlayerProStat.GP > 0";
@@ -89,10 +89,9 @@ If (file_exists($DatabaseFile) == false){
 			$Query = $Query . " AND Team = " . $Team;
 			$QueryTeam = "SELECT Name FROM TeamProInfo WHERE Number = " . $Team;
 			$TeamName = $db->querySingle($QueryTeam,true);	
-			$Title = $Title . $TeamName['Name'] . " Pro Players Stat";
-		}else{
-			$Title = $Title . "Pro Players Stat";
+			$Title = $Title . $TeamName['Name'];		
 		}
+		$Title = $Title . $DynamicTitleLang['Pro'] . $DynamicTitleLang['PlayersStat'];
 		If ($OrderByField == "ShotsPCT" OR $OrderByField == "AMG" OR $OrderByField == "FaceoffPCT" OR $OrderByField == "P20"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY PlayerProStat." . $OrderByField;}
 	}else{
 		/* Farm Query */
@@ -101,18 +100,17 @@ If (file_exists($DatabaseFile) == false){
 			$Query = $Query . " AND Team = " . $Team;
 			$QueryTeam = "SELECT Name FROM TeamFarmInfo WHERE Number = " . $Team;
 			$TeamName = $db->querySingle($QueryTeam,true);	
-			$Title = $Title . $TeamName['Name'] . " Farm Players Stat";
-		}else{
-			$Title = $Title . "Farm Players Stat";
-		}		
+			$Title = $Title . $TeamName['Name'];	
+		}	
+		$Title = $Title . $DynamicTitleLang['Farm'] . $DynamicTitleLang['PlayersStat'];		
 		If ($OrderByField == "ShotsPCT" OR $OrderByField == "AMG" OR $OrderByField == "FaceoffPCT" OR $OrderByField == "P20"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY PlayerFarmStat." . $OrderByField;}
 	}
 	If ($ACSQuery == TRUE){
 		$Query = $Query . " ASC";
-		$Title = $Title . " In Ascending Order By " . $OrderByFieldText;
+		$Title = $Title . $DynamicTitleLang['InAscendingOrderBy'] . $OrderByFieldText;
 	}else{
 		$Query = $Query . " DESC";
-		$Title = $Title . " In Decending Order By " . $OrderByFieldText;
+		$Title = $Title . $DynamicTitleLang['InDecendingOrderBy'] . $OrderByFieldText;
 	}
 	If ($MaximumResult > 0){$Query = $Query . " LIMIT " . $MaximumResult;}
 	$PlayerStat = $db->query($Query);
@@ -138,7 +136,7 @@ $(function() {
       columnSelector_mediaqueryHidden: true,
       columnSelector_breakpoints : [ '50em', '60em', '70em', '80em', '90em', '95em' ],
 	  filter_columnFilters: true,
-      filter_placeholder: { search : 'Search' },
+      filter_placeholder: { search : '<?php echo $TableSorterLang['Search'];?>' },
 	  filter_searchDelay : 1000,	  
       filter_reset: '.tablesorter_Reset'		
     }
@@ -150,11 +148,11 @@ $(function() {
 
 <div class="tablesorter_ColumnSelectorWrapper">
     <input id="tablesorter_colSelect1" type="checkbox" class="hidden">
-    <label class="tablesorter_ColumnSelectorButton" for="tablesorter_colSelect1">Show or Hide Column</label>
+    <label class="tablesorter_ColumnSelectorButton" for="tablesorter_colSelect1"><?php echo $TableSorterLang['ShoworHideColumn'];?></label>
     <div id="tablesorter_ColumnSelector" class="tablesorter_ColumnSelector"></div>
-    <button class="tablesorter_Reset" type="button">Reset Search Filter</button>
-	<div class="tablesorter_Reset FilterTipMain">Filter Tips
-	<table class="FilterTip"><thead><tr><th style="width:55px">Priority</th><th style="width:100px">Type</th><th style="width:485px">Description</th></tr></thead>
+    <button class="tablesorter_Reset" type="button"><?php echo $TableSorterLang['ResetAllSearchFilter'];?></button>
+	<div class="tablesorter_Reset FilterTipMain"><?php echo $TableSorterLang['FilterTips'];?>
+	<table class="FilterTip"><thead><tr><th style="width:55px">Priority</th><th style="width:100px"><?php echo $PlayersLang['Type'];?></th><th style="width:485px">Description</th></tr></thead>
 		<tbody>
 			<tr><td class="STHSCenter">1</td><td><code>|</code> or <code>&nbsp;OR&nbsp;</code></td><td>Logical &quot;or&quot; (Vertical bar). Filter the column for content that matches text from either side of the bar</td></tr>
 			<tr><td class="STHSCenter">2</td><td><code>&nbsp;&&&nbsp;</code> or <code>&nbsp;AND&nbsp;</code></td><td>Logical &quot;and&quot;. Filter the column for content that matches text from either side of the operator.</td></tr>
@@ -173,8 +171,8 @@ $(function() {
 </div>
 
 <table class="tablesorter custom-popup STHSPHPAllPlayerStat_Table"><thead><tr>
-<th data-priority="critical" title="Player Name" class="STHSW140Min">Player Name</th>
-<?php if($Team > 0){echo "<th class=\"columnSelector-false STHSW140Min\" data-priority=\"6\" title=\"Team Name\">Team Name</th>";}else{echo "<th data-priority=\"2\" title=\"Team Name\" class=\"STHSW140Min\">Team Name</th>";}?>
+<th data-priority="critical" title="Player Name" class="STHSW140Min"><?php echo $PlayersLang['PlayerName'];?></th>
+<?php if($Team >= 0){echo "<th class=\"columnSelector-false STHSW140Min\" data-priority=\"6\" title=\"Team Name\">" . $PlayersLang['TeamName'] . "</th>";}else{echo "<th data-priority=\"2\" title=\"Team Name\" class=\"STHSW140Min\">" . $PlayersLang['TeamName'] ."</th>";}?>
 <th data-priority="2" title="Position" class="STHSW25">POS</th>
 <th data-priority="1" title="Games Played" class="STHSW25">GP</th>
 <th data-priority="1" title="Goals" class="STHSW25">G</th>

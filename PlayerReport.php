@@ -12,7 +12,7 @@ if($_GET){$Player = filter_var($_GET['Player'], FILTER_SANITIZE_NUMBER_INT);}
 
 If (file_exists($DatabaseFile) == false){
 	$Player = 0;
-	$PlayerName = "Database File Not Found";
+	$PlayerName = $DatabaseNotFound;
 }else{
 	$db = new SQLite3($DatabaseFile);
 }
@@ -77,7 +77,7 @@ echo "<title>" . $LeagueName . " - " . $PlayerName . "</title>";
 	echo $Position;
 	?></td>
 	<td><?php echo $PlayerInfo['Age']; ?></td>	
-	<td><?php if ($PlayerInfo <> Null){echo number_format($PlayerInfo['ConditionDecimal'],2);} ?></td>	
+	<td><?php if ($PlayerInfo <> Null){echo number_format(str_replace(",",".",$PlayerInfo['ConditionDecimal']),2);} ?></td>	
 	<td><?php echo $PlayerInfo['Suspension']; ?></td>	
 	<td><?php echo $PlayerInfo['Height']; ?></td>
 	<td><?php echo $PlayerInfo['Weight']; ?></td>
