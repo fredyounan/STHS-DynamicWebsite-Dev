@@ -231,7 +231,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 }
 </style>
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <br />
 
 <div class="SearchDiv">

@@ -17,7 +17,7 @@ If (file_exists($DatabaseFile) == false){
 	
 	$Query = "Select ScheduleUseDateInsteadofDay, ScheduleRealDate from LeagueOutputOption";
 	$LeagueOutputOption = $db->querySingle($Query,true);	
-	$Query = "Select Name, DefaultSimulationPerDay from LeagueGeneral";
+	$Query = "Select Name, DefaultSimulationPerDay, TradeDeadLine, ProScheduleTotalDay from LeagueGeneral";
 	$LeagueGeneral = $db->querySingle($Query,true);		
 	$LeagueName = $LeagueGeneral['Name'];
 	
@@ -38,12 +38,12 @@ If (file_exists($DatabaseFile) == false){
 	echo "<title>" . $LeagueName . " - " . $Title . "</title>";
 }?>
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <?php echo "<h1>" . $Title . "</h1>"; ?>
 <script type="text/javascript">
 $(function() {
   $(".custom-popup").tablesorter({
-    widgets: ['stickyHeaders', 'filter'],
+    widgets: ['stickyHeaders', 'filter', 'staticRow'],
     widgetOptions : {
 	  filter_columnFilters: true,
       filter_placeholder: { search : '<?php echo $TableSorterLang['Search'];?>' },
@@ -78,7 +78,7 @@ $(function() {
 	</div>
 </div>
 
-<table class="tablesorter custom-popup STHSPHPTeam_ScheduleTable"><thead><tr>
+<table class="tablesorter custom-popup STHSPHPSchedule_ScheduleTable"><thead><tr>
 <?php
 if ($LeagueOutputOption['ScheduleUseDateInsteadofDay'] == TRUE){
 	echo "<th title=\"Day\" class=\"STHSW100\">" . $ScheduleLang['Day'] ."</th>";
@@ -98,7 +98,12 @@ if ($LeagueOutputOption['ScheduleUseDateInsteadofDay'] == TRUE){
 <th title="Game Link" class="STHSW100"><?php echo $ScheduleLang['Link'];?></th>
 </tr></thead><tbody>
 <?php
-if (empty($Schedule) == false){while ($row = $Schedule ->fetchArray()) { 
+$TradeDeadLine = (boolean)False;
+if (empty($Schedule) == false){while ($row = $Schedule ->fetchArray()) {
+	If ($TradeDeadLine == False AND ($row['Day'] > (($LeagueGeneral['TradeDeadLine'] / 100) * $LeagueGeneral['ProScheduleTotalDay']))){
+		$TradeDeadLine = True;
+		echo "<tr class=\"static\"><td colspan=\"11\" class=\"STHSCenter\"><strong>Trade Deadline --- Trades can’t be done after this day is simulated!</strong></td></tr>";
+	}
 	if ($LeagueOutputOption['ScheduleUseDateInsteadofDay'] == TRUE){
 		$ScheduleDate = date_create($LeagueOutputOption['ScheduleRealDate']);
 		date_add($ScheduleDate, DateInterval::createFromDateString(Floor((($row['Day'] -1) / $LeagueGeneral['DefaultSimulationPerDay'])) . " days"));

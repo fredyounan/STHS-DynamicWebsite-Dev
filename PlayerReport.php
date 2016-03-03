@@ -51,7 +51,7 @@ Not Add Yet : URLLink, GameInRow*, Jersey
 echo "<title>" . $LeagueName . " - " . $PlayerName . "</title>";
 ?>
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <br />
 
 <div class="STHSPHPPlayerStat_PlayerNameHeader"><?php echo $PlayerName . " - " . $PlayerInfo['TeamName']; ?></div><br />
@@ -264,11 +264,11 @@ echo "<title>" . $LeagueName . " - " . $PlayerName . "</title>";
 
 <table class="STHSPHPPlayerStat_Table">
 <tr>
-	<th>Penality Kill Goals</th>
-	<th>Penality Kill Assists</th>
-	<th>Penality Kill Points</th>
-	<th>Penality Kill Shots</th>
-	<th>Penality Kill Minutes Played</th>	
+	<th>Short Handed Goals</th>
+	<th>Short Handed Assists</th>
+	<th>Short Handed Points</th>
+	<th>Short Handed Shots</th>
+	<th>Short Handed Minutes Played</th>	
 </tr><tr>
 	<td><?php echo $PlayerProStat['PKG']; ?></td>
 	<td><?php echo $PlayerProStat['PKA']; ?></td>

@@ -23,14 +23,14 @@ If (file_exists($DatabaseFile) == false){
 	$LeagueName = $LeagueGeneral['Name'];
 	$Conference = array($LeagueGeneral['ConferenceName1'], $LeagueGeneral['ConferenceName2']);
 	$Division = array($LeagueGeneral['DivisionName1'], $LeagueGeneral['DivisionName2'], $LeagueGeneral['DivisionName3'], $LeagueGeneral['DivisionName4'], $LeagueGeneral['DivisionName5'], $LeagueGeneral['DivisionName6']);
-	$Title = $LeagueName . " - " . $TypeText . " Standing";
+	$Title = $LeagueName . " - " . $TypeText . $StandingLang['Standing'];
 }
 echo "<title>" . $Title . "</title>";
 
-function PrintStandingTop() {
+function PrintStandingTop($TeamStatLang) {
 echo "<table class=\"tablesorter STHSPHPStanding_Table\"><thead><tr>";
 echo "<th title=\"Position\" class=\"STHSW35\">PO</th>";
-echo "<th title=\"Team Name\" class=\"STHSW200\">Team</th>";
+echo "<th title=\"Team Name\" class=\"STHSW200\">" . $TeamStatLang['TeamName'] ."</th>";
 echo "<th title=\"Games Played\" class=\"STHSW30\">GP</th>";
 echo "<th title=\"Wins\" class=\"STHSW30\">W</th>";
 echo "<th title=\"Loss\" class=\"STHSW30\">L</th>";
@@ -41,9 +41,9 @@ echo "<th title=\"Goals For\" class=\"STHSW30\">GF</th>";
 echo "<th title=\"Goals Against\" class=\"STHSW30\">GA</th>";
 echo "<th title=\"Goals For Diffirencial against Goals Against\" class=\"STHSW30\">Diff</th>";
 echo "<th title=\"Points Percentage\" class=\"STHSW45\">PCT</th>";
-echo "<th title=\"Home Only\" class=\"STHSW75\">Home</th>";
-echo "<th title=\"Visitor Only\" class=\"STHSW75\">Visitor</th>";
-echo "<th title=\"Last 10 Game\" class=\"STHSW75\">Last 10</th>";
+echo "<th title=\"Home Only\" class=\"STHSW75\">" . $TeamStatLang['Home'] ."</th>";
+echo "<th title=\"Visitor Only\" class=\"STHSW75\">" . $TeamStatLang['Visitor'] ."</th>";
+echo "<th title=\"Last 10 Game\" class=\"STHSW75\">" . $TeamStatLang['Last10'] ."</th>";
 echo "<th title=\"Streak\" class=\"STHSW30\">STK</th>";
 echo "</tr></thead><tbody>";
 }
@@ -106,28 +106,28 @@ Function PrintStandingTableRow($row, $TypeText, $PointSystem, $LoopCount){
 </style>
 
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <?php echo "<h1>" . $Title . "</h1>"; ?>
-<div class="STHSWarning">Your browser screen resolution is too small for this page. Some information are hidden to keep the page readable.<br /></div>
+<div class="STHSWarning"><?php echo $WarningResolution;?><br /></div>
 <div style="width:99%;margin:auto;">
 <div class="tabsmain standard"><ul class="tabmain-links">
 <?php
 If ($LeagueGeneral['DivisionNewNHLPlayoff'] == True){
-	echo "<li class=\"activemain\"><a href=\"#tabmain1\">Wildcard</a></li>";
-    echo "<li><a href=\"#tabmain2\">Conference</a></li>";
+	echo "<li class=\"activemain\"><a href=\"#tabmain1\">" . $StandingLang['Wildcard'] . "</a></li>";
+    echo "<li><a href=\"#tabmain2\">" . $StandingLang['Conference'] . "</a></li>";
 }else{
-	echo "<li class=\"activemain\"><a href=\"#tabmain2\">Conference</a></li>";
+	echo "<li class=\"activemain\"><a href=\"#tabmain2\">" . $StandingLang['Conference'] . "</a></li>";
 }
 ?>
-<li><a href="#tabmain3">Division</a></li>
-<li><a href="#tabmain4">Overall</a></li>
+<li><a href="#tabmain3"><?php echo $StandingLang['Division'];?></a></li>
+<li><a href="#tabmain4"><?php echo $StandingLang['Overall'];?></a></li>
 </ul><div class="tabmain-content">
 <div class="tabmain active" id="tabmain1">
 
 <?php
 If ($DatabaseFound == True){
 	echo "<h2>" . $LeagueGeneral['ConferenceName1'] . "</h2>";
-	PrintStandingTop();
+	PrintStandingTop($TeamStatLang);
 
 	/* Division 1 */
 	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">" . $LeagueGeneral['DivisionName1'] . "</td></tr>";
@@ -164,7 +164,7 @@ If ($DatabaseFound == True){
 
 
 	echo "<h2>" . $LeagueGeneral['ConferenceName2'] . "</h2>";
-	PrintStandingTop();
+	PrintStandingTop($TeamStatLang);
 
 	/* Division 4 */
 	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">" . $LeagueGeneral['DivisionName4'] . "</td></tr>";
@@ -211,7 +211,7 @@ If ($DatabaseFound == True){
 		$DataReturn = $db->query($Query); /* Run the Query Twice to Loop Second Array to confirm the first Query Return Data  */
 		if($DataReturn->fetchArray()){ /* Only Print Information if Query has row */
 			echo "<h2>" . $Value . "</h2>";
-			PrintStandingTop();
+			PrintStandingTop($TeamStatLang);
 			PrintStandingTable($Standing, $TypeText, $LeagueGeneral['PointSystemW'],$LeagueGeneral['HowManyPlayOffTeam']/2);
 		}
 	}
@@ -227,7 +227,7 @@ If ($DatabaseFound == True){
 		$DataReturn = $db->query($Query); /* Run the Query Twice to Loop Second Array to confirm the first Query Return Data  */
 		if($DataReturn->fetchArray()){ /* Only Print Information if Query has row */
 			echo "<h2>" . $Value . "</h2>";
-			PrintStandingTop();
+			PrintStandingTop($TeamStatLang);
 			PrintStandingTable($Standing, $TypeText, $LeagueGeneral['PointSystemW'],0);
 		}
 	}
@@ -240,7 +240,7 @@ If ($DatabaseFound == True){
 	Echo "<h2>Overall</h2>";
 	$Query = "SELECT Team" . $TypeText . "Stat.*, RankingOrder.TeamOrder FROM Team" . $TypeText . "Stat INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((RankingOrder.Type)=0)) ORDER BY RankingOrder.TeamOrder";
 	$Standing = $db->query($Query);
-	PrintStandingTop();
+	PrintStandingTop($TeamStatLang);
 	PrintStandingTable($Standing, $TypeText, $LeagueGeneral['PointSystemW'],0);
 }
 ?>

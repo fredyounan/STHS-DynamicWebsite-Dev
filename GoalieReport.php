@@ -47,7 +47,7 @@ If ($Goalie == 0){
 echo "<title>" . $LeagueName . " - " . $GoalieName . "</title>";
 ?>
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <br />
 
 <div class="STHSPHPPlayerStat_PlayerNameHeader"><?php echo $GoalieName . " - " . $GoalieInfo['TeamName']; ?></div><br />

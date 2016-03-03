@@ -8,14 +8,14 @@ If (file_exists($DatabaseFile) == false){
 	echo "<title>" . $DatabaseNotFound . "</title>";
 	$Title = $DatabaseNotFound;
 }else{
-	$ProOrNot = (boolean)TRUE; /* TRUE = Pro League --- FALSE = Farm League */
+	$TypeText = (string)"Pro";
 	$ACSQuery = (boolean)FALSE;/* The SQL Query must be Ascending Order and not Descending */
 	$MaximumResult = (integer)0;
 	$OrderByField = (string)"W";
 	$OrderByFieldText = (string)"Win";
 	$OrderByInput = (string)"";
 	$TitleOverwrite = (string)"";
-	if(isset($_GET['Farm'])){$ProOrNot = FALSE;}
+	if(isset($_GET['Farm'])){$TypeText = "Farm";}
 	if(isset($_GET['ACS'])){$ACSQuery= TRUE;}
 	if(isset($_GET['Max'])){$MaximumResult = filter_var($_GET['Max'], FILTER_SANITIZE_NUMBER_INT);} 
 	if(isset($_GET['Order'])){$OrderByInput = filter_var($_GET['Order'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH);} 
@@ -62,30 +62,20 @@ If (file_exists($DatabaseFile) == false){
 	$LeagueName = $LeagueGeneral['Name'];
 	
 	If($MaximumResult == 0){$Title = $DynamicTitleLang['All'];}else{$Title = $DynamicTitleLang['Top'] . $MaximumResult . " ";}
-	If ($ProOrNot == TRUE){
-		/* Pro Query */
-		$Query = "SELECT GoalerInfo.TeamName, GoalerProStat.*, ROUND((CAST(GoalerProStat.GA AS REAL) / (GoalerProStat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(GoalerProStat.SA - GoalerProStat.GA AS REAL) / (GoalerProStat.SA)),3) AS PCT, ROUND((CAST(GoalerProStat.PenalityShotsShots - GoalerProStat.PenalityShotsGoals AS REAL) / (GoalerProStat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN GoalerProStat ON GoalerInfo.Number = GoalerProStat.Number WHERE GoalerProStat.GP > 0";
-		if($Team > 0){
-			$Query = $Query . " AND Team = " . $Team;
-			$QueryTeam = "SELECT Name FROM TeamProInfo WHERE Number = " . $Team;
-			$TeamName = $db->querySingle($QueryTeam,true);	
-			$Title = $Title . $TeamName['Name'];
-		}
-		$Title = $Title . $DynamicTitleLang['Pro'] . $DynamicTitleLang['GoaliesStat'];
-		If ($OrderByField == "PCT" OR $OrderByField == "GAA" OR $OrderByField == "PenalityShotsPCT"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY GoalerProStat." . $OrderByField;}
-		
-	}else{
-		/* Farm Query */
-		$Query = "SELECT GoalerInfo.TeamName, GoalerFarmStat.*, ROUND((CAST(GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(GoalerFarmStat.SA - GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SA)),3) AS PCT, ROUND((CAST(GoalerFarmStat.PenalityShotsShots - GoalerFarmStat.PenalityShotsGoals AS REAL) / (GoalerFarmStat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN GoalerFarmStat ON GoalerInfo.Number = GoalerFarmStat.Number WHERE GoalerFarmStat.GP > 0";
-		if($Team > 0){
-			$Query = $Query . " AND Team = " . $Team;
-			$QueryTeam = "SELECT Name FROM TeamFarmInfo WHERE Number = " . $Team;
-			$TeamName = $db->querySingle($QueryTeam,true);	
-			$Title = $Title . $TeamName['Name'];
-		}
-		$Title = $Title . $DynamicTitleLang['Farm'] . $DynamicTitleLang['GoaliesStat'];		
-		If ($OrderByField == "PCT" OR $OrderByField == "GAA" OR $OrderByField == "PenalityShotsPCT"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY GoalerFarmStat." . $OrderByField;}
+	$Query = "SELECT GoalerInfo.TeamName, Goaler" . $TypeText . "Stat.*, ROUND((CAST(Goaler" . $TypeText . "Stat.GA AS REAL) / (Goaler" . $TypeText . "Stat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(Goaler" . $TypeText . "Stat.SA - Goaler" . $TypeText . "Stat.GA AS REAL) / (Goaler" . $TypeText . "Stat.SA)),3) AS PCT, ROUND((CAST(Goaler" . $TypeText . "Stat.PenalityShotsShots - Goaler" . $TypeText . "Stat.PenalityShotsGoals AS REAL) / (Goaler" . $TypeText . "Stat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN Goaler" . $TypeText . "Stat ON GoalerInfo.Number = Goaler" . $TypeText . "Stat.Number WHERE Goaler" . $TypeText . "Stat.GP > 0";
+	if($Team > 0){
+		$Query = $Query . " AND Team = " . $Team;
+		$QueryTeam = "SELECT Name FROM Team" . $TypeText . "Info WHERE Number = " . $Team;
+		$TeamName = $db->querySingle($QueryTeam,true);	
+		$Title = $Title . $TeamName['Name'];
 	}
+	If ($TypeText == "Pro"){
+		$Title = $Title . $DynamicTitleLang['Pro'] . $DynamicTitleLang['GoaliesStat'];
+	}elseif($TypeText == "Farm"){
+		$Title = $Title . $DynamicTitleLang['Farm'] . $DynamicTitleLang['GoaliesStat'];
+	}
+	If ($OrderByField == "PCT" OR $OrderByField == "GAA" OR $OrderByField == "PenalityShotsPCT"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY Goaler" . $TypeText . "Stat." . $OrderByField;}
+
 	If ($ACSQuery == TRUE){
 		$Query = $Query . " ASC";
 		$Title = $Title . $DynamicTitleLang['InAscendingOrderBy'] . $OrderByFieldText;
@@ -101,7 +91,7 @@ If (file_exists($DatabaseFile) == false){
 	echo "<title>" . $LeagueName . " - " . $Title . "</title>";
 }?>
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <?php echo "<h1>" . $Title . "</h1>"; ?>
 <script type="text/javascript">
 $(function() {

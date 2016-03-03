@@ -8,14 +8,14 @@ If (file_exists($DatabaseFile) == false){
 	echo "<title>" . $DatabaseNotFound . "</title>";
 	$Title = $DatabaseNotFound;
 }else{
-	$ProOrNot = (boolean)TRUE; /* TRUE = Pro League --- FALSE = Farm League */
+	$TypeText = (string)"Pro";
 	$ACSQuery = (boolean)FALSE;/* The SQL Query must be Ascending Order and not Descending */
 	$MaximumResult = (integer)0;
 	$OrderByField = (string)"P";
 	$OrderByFieldText = (string)"Points";
 	$OrderByInput = (string)"";
 	$TitleOverwrite = (string)"";
-	if(isset($_GET['Farm'])){$ProOrNot = FALSE;}
+	if(isset($_GET['Farm'])){$TypeText = "Farm";}
 	if(isset($_GET['ACS'])){$ACSQuery= TRUE;}
 	if(isset($_GET['Max'])){$MaximumResult = filter_var($_GET['Max'], FILTER_SANITIZE_NUMBER_INT);} 
 	if(isset($_GET['Order'])){$OrderByInput  = filter_var($_GET['Order'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH);} 
@@ -82,29 +82,21 @@ If (file_exists($DatabaseFile) == false){
 	$LeagueGeneral = $db->querySingle($Query,true);		
 	$LeagueName = $LeagueGeneral['Name'];
 	If($MaximumResult == 0){$Title = $DynamicTitleLang['All'];}else{$Title = $DynamicTitleLang['Top'] . $MaximumResult . " ";}
-	If ($ProOrNot == TRUE){
-		/* Pro Query */
-		$Query = "SELECT PlayerProStat.*, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.TeamName, ROUND((CAST(PlayerProStat.G AS REAL) / (PlayerProStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerProStat.SecondPlay AS REAL) / 60 / (PlayerProStat.GP)),2) AS AMG,ROUND((CAST(PlayerProStat.FaceOffWon AS REAL) / (PlayerProStat.FaceOffTotal))*100,2) as FaceoffPCT,ROUND((CAST(PlayerProStat.P AS REAL) / (PlayerProStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerProStat ON PlayerInfo.Number = PlayerProStat.Number WHERE PlayerProStat.GP > 0";
+		$Query = "SELECT Player" . $TypeText . "Stat.*, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.TeamName, ROUND((CAST(Player" . $TypeText . "Stat.G AS REAL) / (Player" . $TypeText . "Stat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(Player" . $TypeText . "Stat.SecondPlay AS REAL) / 60 / (Player" . $TypeText . "Stat.GP)),2) AS AMG,ROUND((CAST(Player" . $TypeText . "Stat.FaceOffWon AS REAL) / (Player" . $TypeText . "Stat.FaceOffTotal))*100,2) as FaceoffPCT,ROUND((CAST(Player" . $TypeText . "Stat.P AS REAL) / (Player" . $TypeText . "Stat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN Player" . $TypeText . "Stat ON PlayerInfo.Number = Player" . $TypeText . "Stat.Number WHERE Player" . $TypeText . "Stat.GP > 0";
 		if($Team > 0){
 			$Query = $Query . " AND Team = " . $Team;
-			$QueryTeam = "SELECT Name FROM TeamProInfo WHERE Number = " . $Team;
+			$QueryTeam = "SELECT Name FROM Team" . $TypeText . "Info WHERE Number = " . $Team;
 			$TeamName = $db->querySingle($QueryTeam,true);	
 			$Title = $Title . $TeamName['Name'];		
 		}
+		
+		If ($OrderByField == "ShotsPCT" OR $OrderByField == "AMG" OR $OrderByField == "FaceoffPCT" OR $OrderByField == "P20"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY Player" . $TypeText . "Stat." . $OrderByField;}
+	If ($TypeText == "Pro"){
 		$Title = $Title . $DynamicTitleLang['Pro'] . $DynamicTitleLang['PlayersStat'];
-		If ($OrderByField == "ShotsPCT" OR $OrderByField == "AMG" OR $OrderByField == "FaceoffPCT" OR $OrderByField == "P20"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY PlayerProStat." . $OrderByField;}
-	}else{
-		/* Farm Query */
-		$Query = "SELECT PlayerFarmStat.*, PlayerInfo.PosC, PlayerInfo.PosLW, PlayerInfo.PosRW, PlayerInfo.PosD, PlayerInfo.TeamName, ROUND((CAST(PlayerFarmStat.G AS REAL) / (PlayerFarmStat.Shots))*100,2) AS ShotsPCT, ROUND((CAST(PlayerFarmStat.SecondPlay AS REAL) / 60 / (PlayerFarmStat.GP)),2) AS AMG,ROUND((CAST(PlayerFarmStat.FaceOffWon AS REAL) / (PlayerFarmStat.FaceOffTotal))*100,2) as FaceoffPCT,ROUND((CAST(PlayerFarmStat.P AS REAL) / (PlayerFarmStat.SecondPlay) * 60 * 20),2) AS P20 FROM PlayerInfo INNER JOIN PlayerFarmStat ON PlayerInfo.Number = PlayerFarmStat.Number WHERE PlayerFarmStat.GP > 0";	
-		if($Team > 0){
-			$Query = $Query . " AND Team = " . $Team;
-			$QueryTeam = "SELECT Name FROM TeamFarmInfo WHERE Number = " . $Team;
-			$TeamName = $db->querySingle($QueryTeam,true);	
-			$Title = $Title . $TeamName['Name'];	
-		}	
-		$Title = $Title . $DynamicTitleLang['Farm'] . $DynamicTitleLang['PlayersStat'];		
-		If ($OrderByField == "ShotsPCT" OR $OrderByField == "AMG" OR $OrderByField == "FaceoffPCT" OR $OrderByField == "P20"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY PlayerFarmStat." . $OrderByField;}
+	}elseif($TypeText == "Farm"){
+		$Title = $Title . $DynamicTitleLang['Farm'] . $DynamicTitleLang['PlayersStat'];
 	}
+		
 	If ($ACSQuery == TRUE){
 		$Query = $Query . " ASC";
 		$Title = $Title . $DynamicTitleLang['InAscendingOrderBy'] . $OrderByFieldText;
@@ -120,7 +112,7 @@ If (file_exists($DatabaseFile) == false){
 	echo "<title>" . $LeagueName . " - " . $Title . "</title>";
 }?>
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <?php echo "<h1>" . $Title . "</h1>"; ?>
 <script type="text/javascript">
 $(function() {
@@ -195,9 +187,9 @@ $(function() {
 <th data-priority="4" title="Power Play Points" class="STHSW25">PPP</th>
 <th class="columnSelector-false STHSW25" data-priority="6" title="Power Play Shots">PPS</th>
 <th class="columnSelector-false STHSW25" data-priority="6" title="Power Play Minutes Played">PPM</th>
-<th data-priority="5" title="Penalty Kill Goals" class="STHSW25">PKG</th>
-<th data-priority="5" title="Penalty Kill Assists" class="STHSW25">PKA</th>
-<th data-priority="5" title="Penalty Kill Points" class="STHSW25">PKP</th>
+<th data-priority="5" title="Short Handed Goals" class="STHSW25">PKG</th>
+<th data-priority="5" title="Short Handed Assists" class="STHSW25">PKA</th>
+<th data-priority="5" title="Short Handed Points" class="STHSW25">PKP</th>
 <th class="columnSelector-false STHSW25" data-priority="6" title="Penalty Kill Shots">PKS</th>
 <th class="columnSelector-false STHSW25" data-priority="6" title="Penalty Kill Minutes Played">PKM</th>
 <th class="columnSelector-false STHSW25" data-priority="6" title="Game Winning Goals">GW</th>

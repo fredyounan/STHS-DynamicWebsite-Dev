@@ -118,7 +118,7 @@ If (file_exists($DatabaseFile) == false){
 ?>
 
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <?php echo "<h1>" . $Title . "</h1>"; ?>
 
 <script type="text/javascript">

@@ -1,5 +1,6 @@
 <?php 
-$DatabaseFile = (string)"D:\WWW\V3Output\SIM3-SEA-STHS.db";
+$DatabaseFile = (string)"D:\WWW\V3Output\SIM3-SEA-STHS.db"; 
+/* $DatabaseFile = (string)"D:\WWW\STHS Test PHP\LSRSM1-STHS.db"; */
 $lang = "en"; /* The $lang option must be either "en" or "fr" */
 include 'Language.php';
  ?>

@@ -4,6 +4,7 @@ case 'fr': /* Start FR Language Pack */
 
 $DatabaseNotFound = "La base de donnée n'a pas été trouvé";
 $Footer = "Website create by the <a href=\"http://sths.simont.info\">SimonT Hockey Simulator (STHS)</a>";
+$WarningResolution = "Your browser screen resolution is too small for this page. Some information are hidden to keep the page readable.";
 
 $TableSorterLang = array(
 'ShoworHideColumn'		=> 'Show or Hide Column',
@@ -15,6 +16,7 @@ $TableSorterLang = array(
 $TransactionLang = array(
 'LeagueTitle'		=> 'Transactions de Ligue',
 'TeamTitle'			=> 'Transactions pour ',
+'TradeHistory'			=> 'Historique d\'Échange',
 );
 
 $WaiverLang  = array(
@@ -35,6 +37,7 @@ $CoachesLang = array(
 'AvailableCoaches'			=> 'Available Coaches',
 'CoachesName'			=> 'Coaches Name',
 'TeamName'			=> 'Team Name',
+'Age'			=> 'Age',
 'Salary'			=> 'Salary',
 'Contract'			=> 'Contract',
 );
@@ -151,6 +154,7 @@ default: /* Start EN Language Pack */
 
 $DatabaseNotFound = "Database File Not Found";
 $Footer = "Website create by the <a href=\"http://sths.simont.info\">SimonT Hockey Simulator (STHS)</a>";
+$WarningResolution = "Your browser screen resolution is too small for this page. Some information are hidden to keep the page readable.";
 
 $TableSorterLang = array(
 'ShoworHideColumn'		=> 'Show or Hide Column',
@@ -162,6 +166,7 @@ $TableSorterLang = array(
 $TransactionLang = array(
 'LeagueTitle'		=> 'League Transactions',
 'TeamTitle'			=> 'Transactions for ',
+'TradeHistory'			=> 'Trade History',
 );
 
 $WaiverLang  = array(
@@ -182,6 +187,7 @@ $CoachesLang = array(
 'AvailableCoaches'			=> 'Available Coaches',
 'CoachesName'			=> 'Coaches Name',
 'TeamName'			=> 'Team Name',
+'Age'			=> 'Age',
 'Salary'			=> 'Salary',
 'Contract'			=> 'Contract',
 );
@@ -290,8 +296,98 @@ $TeamStatLang = array(
 'Home'			=> 'Home',
 'Visitor'		=> 'Visitor',
 'TeamName'			=> 'Team',
+'Last10'		=> 'Last 10',
 );
 
+$StandingLang = array(
+'Standing'		=> ' Standing',
+'Wildcard'		=> 'Wildcard',
+'Conference'		=> 'Conference',
+'Division'		=> 'Division',
+'Overall'		=> 'Overall',
+);
+
+$TeamLang = array(
+'IncorrectTeam'		=> 'Incorrect Team',
+'Teamnotfound'		=> 'Team not found',
+'GM'		=> 'GM : ',
+'Morale'		=> 'Morale : ',
+'TeamOverall'		=> 'Team Overall : ',
+'Roster'		=> 'Roster',
+'Scoring'		=> 'Scoring',
+'PlayersInfo'		=> 'Players Info',
+'Lines'		=> 'Lines',
+'TeamStats'		=> 'Team Stats',
+'Schedule'		=> 'Schedule',
+'Finance'		=> 'Finance',
+'Depth'		=> 'Depth',
+'History'		=> 'History',
+'InjurySuspension'		=> 'Injury / Suspension',
+'Scratches'		=> 'Scratches',
+'TeamAverage'		=> 'TEAM AVERAGE',
+'TotalPlayers'		=> 'Total Players',
+'AverageAge'		=> 'Average Age',
+'AverageWeight'		=> 'Average Weight',
+'AverageHeight'		=> 'Average Height',
+'AverageContract'		=> 'Average Contract',
+'AverageYear1Salary'		=> 'Average Year 1 Salary',
+'LineNumber'		=> 'Line #',
+'Center'		=> 'Center',
+'LeftWing'		=> 'Left Wing',
+'RightWing'		=> 'Right Wing',
+'Wing'		=> 'Wing',
+'Defense'		=> 'Defense',
+'Goalie'		=> 'Goalie',
+'TimePCT'		=> 'Time %',
+'PHY'		=> 'PHY',
+'DF'		=> 'DF',
+'OF'		=> 'OF',
+'5vs5Forward'		=> '5 vs 5 Forward',
+'5vs5Defense'		=> '5 vs 5 Defense',
+'PowerPlayForward'		=> 'Power Play Forward',
+'PowerPlayDefense'		=> 'Power Play Defense',
+'PenaltyKill4PlayersForward'		=> 'Penalty Kill 4 Players Forward',
+'PenaltyKill4PlayersDefense'		=> 'Penalty Kill 4 Players Defense',
+'PenaltyKill3Players'		=> 'Penalty Kill 3 Players',
+'4vs4Forward'		=> '4 vs 4 Forward',
+'4vs4Defense'		=> '4 vs 4 Defense',
+'LastMinutesOffensive'		=> 'Last Minutes Offensive',
+'LastMinutesDefensive'		=> 'Last Minutes Defensive',
+'ExtraForwards'		=> 'Extra Forwards',
+'ExtraDefensemen'		=> 'Extra Defensemen',
+'PenaltyShots'		=> 'Penalty Shots',
+'CustomOTLinesForwards'		=> 'Custom OT Lines Forwards',
+'CustomOTLinesDefensemen'		=> 'Custom OT Lines Defensemen',
+'Normal'		=> 'Normal',
+'PowerPlay'		=> 'PowerPlay',
+'PenalityKill'		=> 'Penality Kill',
+'DepthChart'		=> 'Depth Chart',
+'Prospects'		=> 'Prospects',
+'DraftPicks'		=> 'Draft Picks',
+'Year'		=> 'Year',
+);
+
+$IndexLang = array(
+'LatestTransactions'		=> 'Latest Trade, Waiver, Injury & Suspension Transactions',
+'News'		=> ' News',
+'By'		=> ' By',
+'On'		=> ' On',
+'Top5Point'		=> ' Top 5 Point',
+'Top5Goal'		=> ' Top 5 Goal',
+'Top5Goalies'		=> ' Top 5 Goalies',
+);
+
+$TodayGamesLang = array(
+'TodayGamesTitle'		=> ' Today\'s Games',
+'BoxScore'		=> 'BoxScore',
+'ProGames'		=> 'Pro Games ',
+'FarmGames'		=> 'Farm Games ',
+'UnknownGames'		=> 'Unknown Games',
+);
+
+$IndividualLeadersLang = array(
+'IndividualLeadersTitle'		=> 'Individual Leaders',
+);
 
 break; 	/* End FR Language Pack */
 } 

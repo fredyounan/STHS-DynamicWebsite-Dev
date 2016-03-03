@@ -128,7 +128,7 @@ If (file_exists($DatabaseFile) == false){
 	echo "<title>" . $LeagueName . " - " . $Title . "</title>";
 }?>
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <?php echo "<h1>" . $Title . "</h1>"; ?>
 <script type="text/javascript">
 $(function() {
@@ -202,7 +202,7 @@ $(function() {
 ?>
 <th data-priority="5" title="Salary Year 2" class="STHSW85"><?php echo $PlayersLang['SalaryYear2'];?></th>
 <th data-priority="5" title="Salary Year 3" class="STHSW85"><?php echo $PlayersLang['SalaryYear3'];?></th>
-<th class="columnSelector-false STHSW85" data-priority="6" title="Salary Year 4">><?php echo $PlayersLang['SalaryYear4'];?></th>
+<th class="columnSelector-false STHSW85" data-priority="6" title="Salary Year 4"><?php echo $PlayersLang['SalaryYear4'];?></th>
 <th class="columnSelector-false STHSW85" data-priority="6" title="Salary Year 5"><?php echo $PlayersLang['SalaryYear5'];?></th>
 <th class="columnSelector-false STHSW85" data-priority="6" title="Salary Year 6"><?php echo $PlayersLang['SalaryYear6'];?></th>
 <th class="columnSelector-false STHSW85" data-priority="6" title="Salary Year 7"><?php echo $PlayersLang['SalaryYear7'];?></th>

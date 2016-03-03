@@ -16,7 +16,7 @@ If (file_exists($DatabaseFile) == false){
 echo "<title>" . $LeagueName . " - " . $CoachesLang['CoachesTitle'] . "</title>";
 ?>
 </head><body>
-<!-- TOP MENU PLACE HOLDER -->
+<?php include "Menu.php";?>
 <br />
 
 <script type="text/javascript">
@@ -46,7 +46,7 @@ $(function() {
 <th title="Leadership" class="STHSW25">LD</th>
 <th title="Potential" class="STHSW25">PO</th>
 <th title="Country" class="STHSW35">CNT</th>
-<th title="Age" class="STHSW35">Age</th>
+<th title="Age" class="STHSW35"><?php echo $CoachesLang['Age'];?></th>
 <th title="Contract" class="STHSW25"><?php echo $CoachesLang['Contract'];?></th>
 <th title="Salary" class="STHSW100"><?php echo $CoachesLang['Salary'];?></th>
 </tr></thead>
