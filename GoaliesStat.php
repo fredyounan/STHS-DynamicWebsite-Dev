@@ -152,7 +152,7 @@ $(function() {
 <th data-priority="critical" title="Goals Against Average" class="STHSW50">GAA</th>
 <th data-priority="3" title="Minutes Played" class="STHSW50">MP</th>
 <th data-priority="4" title="Penalty Minutes" class="STHSW25">PIM</th>
-<th data-priority="4" title="Shootout" class="STHSW25">SO</th>
+<th data-priority="4" title="Shutouts" class="STHSW25">SO</th>
 <th data-priority="3" title="Goals Against" class="STHSW25">GA</th>
 <th data-priority="3" title="Shots Against" class="STHSW45">SA</th>
 <th data-priority="4" title="Shots Against Rebound" class="STHSW45">SAR</th>
@@ -175,7 +175,7 @@ if (empty($GoalieStat) == false){while ($Row = $GoalieStat ->fetchArray()) {
 	echo "<td>" . $Row['L'] . "</td>";
 	echo "<td>" . $Row['OTL'] . "</td>";
 	echo "<td>" . number_Format($Row['PCT'],3) . "</td>";
-	echo "<td>" . number_Format($Row['GAA'],3) . "</td>";
+	echo "<td>" . number_Format($Row['GAA'],2) . "</td>";
 	echo "<td>";if ($Row <> Null){echo Floor($Row['SecondPlay']/60);}; echo "</td>";
 	echo "<td>" . $Row['Pim'] . "</td>";
 	echo "<td>" . $Row['Shootout'] . "</td>";

@@ -30,7 +30,7 @@ If (file_exists($DatabaseFile) == false){
 	$Query = "SELECT * FROM SchedulePro WHERE Day = " . ($LeagueGeneral['ScheduleNextDay'] - $LeagueGeneral['DefaultSimulationPerDay']) . " ORDER BY GameNumber ";
 	$Schedule = $db->query($Query);
 	
-	echo "<title>" . $LeagueName . "</title>";
+	echo "<title>" . $LeagueName . " - " . $IndexLang['IndexTitle'] . "</title>";
 }?>
 <style type="text/css">
 .carousel {	border: 1px solid rgb(186, 186, 186); border-image: none; left: -5000px; float: left; visibility: hidden; position: relative}
@@ -104,11 +104,12 @@ if (empty($PlayerStat) == false){while ($Row = $PlayerStat ->fetchArray()) {
 }}?>
 <tr><th colspan="2" class="STHSTop5"><br /><br /><?php echo $IndexLang['Top5Goalies'];?></th></tr>
 <tr><td class="STHSIndex_Top5PointNameHeader"><?php echo $PlayersLang['GoalieName'];?></td><td class="STHSIndex_Top5PointResultHeader">W-PCT</td></tr>
-<tr><td>Corey Crawford (T29)</td><td>7 - 0.926</td></tr>
-<tr><td>Steve Mason (T30)</td><td>8 - 0.922</td></tr>
-<tr><td>Marc-Andre Fleury (TM6)</td><td>7 - 0.910</td></tr>
-<tr><td>Pekka Rinne (T28)</td><td>6 - 0.907</td></tr>
-<tr><td>Braden Holtby (T27)</td><td>4 - 0.900</td></tr>
+<?php
+$Query = "SELECT ROUND((CAST(GoalerProStat.SA - GoalerProStat.GA AS REAL) / (GoalerProStat.SA)),3) AS PCT, GoalerProStat.W, GoalerProStat.SecondPlay, GoalerProStat.Name, GoalerProStat.Number, TeamProInfo.Abbre FROM (GoalerInfo INNER JOIN GoalerProStat ON GoalerInfo.Number = GoalerProStat.Number) LEFT JOIN TeamProInfo ON GoalerInfo.Team = TeamProInfo.Number WHERE (GoalerProStat.SecondPlay >= (" . $LeagueOutputOption['ProMinimumGamePlayerLeader'] . "*3600)) AND (GoalerInfo.Team > 0) AND (PCT > 0) ORDER BY PCT DESC, GoalerProStat.W DESC LIMIT 5";
+$PlayerStat = $db->query($Query);
+if (empty($PlayerStat) == false){while ($Row = $PlayerStat ->fetchArray()) {
+	echo "<tr><td><a href=\"GoalieReport.php?Goalie=" . $Row['Number'] . "\">" . $Row['Name'] . " (" . $Row['Abbre'] . ")</a></td><td>" . $Row['W'] . " - " . number_Format($Row['PCT'],3) .  "</td></tr>\n";
+}}?>
 </table></td></tr></table>
 
 <?php include "Footer.php";?>

@@ -243,7 +243,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 	<td class="STHSW140"><?php echo $SearchLang['Team'];?></td><td class="STHSW250">
 	<select name="Team" class="STHSW250" >
 	<option selected value=""><?php echo $SearchLang['AllTeam'];?></option> 
-	<option value="0"><?php echo $SearchLang['Unassigned'];?></option>
+	<option value="0"><?php echo $DynamicTitleLang['Unassigned'];?></option>
 	<?php
 	if (empty($TeamName) == false){while ($Row = $TeamName ->fetchArray()) {
 		echo "<option value=\"" . $Row['Number'] . "\">" . $Row['Name'] . "</option>"; 
@@ -309,7 +309,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 	<td class="STHSW140"><?php echo $SearchLang['Team'];?></td><td class="STHSW250">
 	<select name="Team" class="STHSW250" >
 	<option selected value=""><?php echo $SearchLang['AllTeam'];?></option> 
-	<option value="0"><?php echo $SearchLang['Unassigned'];?></option>
+	<option value="0"><?php echo $DynamicTitleLang['Unassigned'];?></option>
 	<?php
 	if (empty($TeamName) == false){while ($Row = $TeamName ->fetchArray()) {
 		echo "<option value=\"" . $Row['Number'] . "\">" . $Row['Name'] . "</option>"; 
@@ -375,7 +375,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 	<td class="STHSW140"><?php echo $SearchLang['Team'];?></td><td class="STHSW250">
 	<select name="Team" class="STHSW250" >
 	<option selected value=""><?php echo $SearchLang['AllTeam'];?></option> 
-	<option value="0"><?php echo $SearchLang['Unassigned'];?></option>
+	<option value="0"><?php echo $DynamicTitleLang['Unassigned'];?></option>
 	<?php
 	if (empty($TeamName) == false){while ($Row = $TeamName ->fetchArray()) {
 		echo "<option value=\"" . $Row['Number'] . "\">" . $Row['Name'] . "</option>"; 

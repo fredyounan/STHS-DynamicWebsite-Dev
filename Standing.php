@@ -150,7 +150,7 @@ If ($DatabaseFound == True){
 	}}
 
 	/* Overall for Conference 1 */	
-	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">Wildcard</td></tr>";
+	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">" . $StandingLang['Wildcard'] ."</td></tr>";
 	$Query = " SELECT Team" . $TypeText . "Stat.*, Team" . $TypeText . "Info.Conference, Team" . $TypeText . "Info.Division, RankingOrder.Type FROM (Team" . $TypeText . "Stat INNER JOIN Team" . $TypeText . "Info ON Team" . $TypeText . "Stat.Number = Team" . $TypeText . "Info.Number) INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((Team" . $TypeText . "Info.Conference)=\"" . $LeagueGeneral['ConferenceName1'] . "\") AND ((RankingOrder.Type)=1)) ORDER BY RankingOrder.TeamOrder";
 	$Standing = $db->query($Query);
 	$LoopCount =0;
@@ -237,7 +237,7 @@ If ($DatabaseFound == True){
 <div class="tabmain" id="tabmain4">
 <?php
 If ($DatabaseFound == True){
-	Echo "<h2>Overall</h2>";
+	Echo "<h2>" . $StandingLang['Overall'] . "</h2>";
 	$Query = "SELECT Team" . $TypeText . "Stat.*, RankingOrder.TeamOrder FROM Team" . $TypeText . "Stat INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((RankingOrder.Type)=0)) ORDER BY RankingOrder.TeamOrder";
 	$Standing = $db->query($Query);
 	PrintStandingTop($TeamStatLang);

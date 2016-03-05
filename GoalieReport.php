@@ -203,7 +203,7 @@ echo "<title>" . $LeagueName . " - " . $GoalieName . "</title>";
 <table class="STHSPHPPlayerStat_Table">
 <tr>
 	<th>Penalty Minutes</th>
-	<th>Shootout</th>
+	<th>Shutouts</th>
 	<th>Goals Against</th>
 	<th>Shots Against</th>
 	<th>Shots Against Rebound</th>
@@ -275,7 +275,7 @@ echo "<title>" . $LeagueName . " - " . $GoalieName . "</title>";
 <table class="STHSPHPPlayerStat_Table">
 <tr>
 	<th>Penalty Minutes</th>
-	<th>Shootout</th>
+	<th>Shutouts</th>
 	<th>Goals Against</th>
 	<th>Shots Against</th>
 	<th>Shots Against Rebound</th>
