@@ -418,11 +418,11 @@ echo "<title>" . $LeagueName . " - " . $PlayerName . "</title>";
 
 <table class="STHSPHPPlayerStat_Table">
 <tr>
-	<th>Penality Kill Goals</th>
-	<th>Penality Kill Assists</th>
-	<th>Penality Kill Points</th>
-	<th>Penality Kill Shots</th>
-	<th>Penality Kill Minutes Played</th>	
+	<th>Penalty Kill Goals</th>
+	<th>Penalty Kill Assists</th>
+	<th>Penalty Kill Points</th>
+	<th>Penalty Kill Shots</th>
+	<th>Penalty Kill Minutes Played</th>	
 </tr><tr>
 	<td><?php echo $PlayerFarmStat['PKG']; ?></td>
 	<td><?php echo $PlayerFarmStat['PKA']; ?></td>

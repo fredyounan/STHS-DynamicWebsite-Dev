@@ -56,13 +56,13 @@ If (file_exists($DatabaseFile) == false){
 	array("ShotsPerPeriod4","Goals for 4th Period"),
 	array("ShotsAga","Shots Against"),
 	array("ShotsBlock","Shots Block"),
-	array("Pim","Penality Minutes"),
+	array("Pim","Penalty Minutes"),
 	array("Hit","Hits"),
 	array("PPAttemp","Power Play Attemps"),
 	array("PPGoal","Power Play Goals"),
-	array("PKAttemp","Penality Kill Attemps"),
-	array("PKGoalGA","Penality Kill Goals Against"),
-	array("PKGoalGF","Penality Kill Goals For"),
+	array("PKAttemp","Penalty Kill Attemps"),
+	array("PKGoalGA","Penalty Kill Goals Against"),
+	array("PKGoalGF","Penalty Kill Goals For"),
 	array("FaceOffWonOffensifZone","Won Offensif Zone Faceoff"),
 	array("FaceOffTotalOffensifZone","Total Offensif Zone Faceoff"),
 	array("FaceOffWonDefensifZone","Won Defensif Zone Faceoff"),
@@ -220,15 +220,15 @@ $(function() {
 <th data-priority="6" title="Goals for 4th Period" class="columnSelector-false STHSW25">SP4</th>
 <th data-priority="2" title="Shots Against" class="STHSW25">SHA</th>
 <th data-priority="2" title="Shots Block" class="STHSW25">SHB</th>
-<th data-priority="3" title="Penality Minutes" class="STHSW25">Pim</th>
+<th data-priority="3" title="Penalty Minutes" class="STHSW25">Pim</th>
 <th data-priority="3" title="Hits" class="STHSW25">Hit</th>
 <th data-priority="6" title="Power Play Attemps" class="columnSelector-false STHSW25">PPA</th>
 <th data-priority="6" title="Power Play Goals" class="columnSelector-false STHSW25">PPG</th>
 <th data-priority="4" title="Power Play %" class="STHSW35">PP%</th>
-<th data-priority="6" title="Penality Kill Attemps" class="columnSelector-false STHSW25">PKA</th>
-<th data-priority="6" title="Penality Kill Goals Against" class="columnSelector-false STHSW25">PK GA</th>
-<th data-priority="4" title="Penality Kill %" class="STHSW35">PK%</th>
-<th data-priority="6" title="Penality Kill Goals For" class="columnSelector-false STHSW25">PK GF</th>
+<th data-priority="6" title="Penalty Kill Attemps" class="columnSelector-false STHSW25">PKA</th>
+<th data-priority="6" title="Penalty Kill Goals Against" class="columnSelector-false STHSW25">PK GA</th>
+<th data-priority="4" title="Penalty Kill %" class="STHSW35">PK%</th>
+<th data-priority="6" title="Penalty Kill Goals For" class="columnSelector-false STHSW25">PK GF</th>
 <th data-priority="6" title="Won Offensif Zone Faceoff" class="columnSelector-false STHSW35">W OF FO</th>
 <th data-priority="6" title="Total Offensif Zone Faceoff" class="columnSelector-false STHSW35">T OF FO</th>
 <th data-priority="6" title="Offensif Zone Faceoff %" class="columnSelector-false STHSW35">OF FO%</th>

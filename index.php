@@ -51,7 +51,7 @@ a.next:hover {background-color: rgb(102, 102, 102);}
 
 <table class="STHSIndex_Main"><tr><td class="STHSIndex_Score">
 <table class="STHSTableFullW"><tr><td>
-<div class="STHSIndex_LastestResult">Latest Scores</div>
+<div class="STHSIndex_LastestResult"><?php echo $IndexLang['LatestScores'];?></div>
 <div class="custom-container nonImageContent"><a class="prev" href="#">‹</a><div class="carousel"><ul>
 <?php
 if (empty($Schedule) == false){while ($row = $Schedule ->fetchArray()) {
