@@ -92,9 +92,9 @@ If (file_exists($DatabaseFile) == false){
 		
 		If ($OrderByField == "ShotsPCT" OR $OrderByField == "AMG" OR $OrderByField == "FaceoffPCT" OR $OrderByField == "P20"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY Player" . $TypeText . "Stat." . $OrderByField;}
 	If ($TypeText == "Pro"){
-		$Title = $Title . $DynamicTitleLang['Pro'] . $DynamicTitleLang['PlayersStat'];
+		$Title = $Title . $DynamicTitleLang['PlayersStat'] . $DynamicTitleLang['Pro'];
 	}elseif($TypeText == "Farm"){
-		$Title = $Title . $DynamicTitleLang['Farm'] . $DynamicTitleLang['PlayersStat'];
+		$Title = $Title . $DynamicTitleLang['PlayersStat'] . $DynamicTitleLang['Farm'] ;
 	}
 		
 	If ($ACSQuery == TRUE){

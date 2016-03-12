@@ -70,9 +70,9 @@ If (file_exists($DatabaseFile) == false){
 		$Title = $Title . $TeamName['Name'];
 	}
 	If ($TypeText == "Pro"){
-		$Title = $Title . $DynamicTitleLang['Pro'] . $DynamicTitleLang['GoaliesStat'];
+		$Title = $Title  . $DynamicTitleLang['GoaliesStat'] . $DynamicTitleLang['Pro'];
 	}elseif($TypeText == "Farm"){
-		$Title = $Title . $DynamicTitleLang['Farm'] . $DynamicTitleLang['GoaliesStat'];
+		$Title = $Title  . $DynamicTitleLang['GoaliesStat'] . $DynamicTitleLang['Farm'];
 	}
 	If ($OrderByField == "PCT" OR $OrderByField == "GAA" OR $OrderByField == "PenalityShotsPCT"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY Goaler" . $TypeText . "Stat." . $OrderByField;}
 
