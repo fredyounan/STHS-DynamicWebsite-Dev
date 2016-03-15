@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php include "Header.php";?>
 <?php
 /*
@@ -70,10 +71,10 @@ echo "<title>" . $LeagueName . " - " . $PlayerName . "</title>";
 </tr><tr>
 	<td><?php
 	$Position = (string)"";
-	if ($PlayerInfo['PosC']== "True"){if ($Position == ""){$Position = "Center";}else{$Position = $Position . " - Center";}}
-	if ($PlayerInfo['PosLW']== "True"){if ($Position == ""){$Position = "Left Wing";}else{$Position = $Position . " - Left Wing";}}
-	if ($PlayerInfo['PosRW']== "True"){if ($Position == ""){$Position = "Right Wing";}else{$Position = $Position . " - Right Wing";}}
-	if ($PlayerInfo['PosD']== "True"){if ($Position == ""){$Position = "Defence";}else{$Position = $Position . " - Defence";}}
+	if ($PlayerInfo['PosC']== "True"){if ($Position == ""){$Position = $TeamLang['Center'];}else{$Position = $Position . " - " . $TeamLang['Center'];}}
+	if ($PlayerInfo['PosLW']== "True"){if ($Position == ""){$Position = $TeamLang['LeftWing'];}else{$Position = $Position . " - " . $TeamLang['LeftWing'];}}
+	if ($PlayerInfo['PosRW']== "True"){if ($Position == ""){$Position = $TeamLang['RightWing'];}else{$Position = $Position . " - " . $TeamLang['RightWing'];}}
+	if ($PlayerInfo['PosD']== "True"){if ($Position == ""){$Position = $TeamLang['Defense'];}else{$Position = $Position . " - " . $TeamLang['Defense'];}}
 	echo $Position;
 	?></td>
 	<td><?php echo $PlayerInfo['Age']; ?></td>	

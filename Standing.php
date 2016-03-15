@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php include "Header.php";?>
 <?php
 $TypeText = (string)"Pro";
@@ -187,7 +188,7 @@ If ($DatabaseFound == True){
 	}}
 
 	/* Overall for Conference 2 */	
-	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">Wildcard</td></tr>";
+	Echo "<tr class=\"static\"><td class=\"staticTD\" colspan=\"16\">" . $StandingLang['Wildcard'] . "</td></tr>";
 	$Query = " SELECT Team" . $TypeText . "Stat.*, Team" . $TypeText . "Info.Conference, Team" . $TypeText . "Info.Division, RankingOrder.Type FROM (Team" . $TypeText . "Stat INNER JOIN Team" . $TypeText . "Info ON Team" . $TypeText . "Stat.Number = Team" . $TypeText . "Info.Number) INNER JOIN RankingOrder ON Team" . $TypeText . "Stat.Number = RankingOrder.Team" . $TypeText . "Number WHERE (((Team" . $TypeText . "Info.Conference)=\"" . $LeagueGeneral['ConferenceName2'] . "\") AND ((RankingOrder.Type)=2)) ORDER BY RankingOrder.TeamOrder";
 	$Standing = $db->query($Query);
 	$LoopCount =0;

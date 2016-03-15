@@ -160,6 +160,7 @@ $TeamStatLang = array(
 'Visitor'		=> 'Visitor',
 'TeamName'			=> 'Team',
 'Last10'		=> 'Last 10',
+'MinimumGamesPlayed'	=> 'Minimum Games Played: ',
 );
 
 $StandingLang = array(
@@ -202,6 +203,8 @@ $TeamLang = array(
 'Defense'		=> 'Defense',
 'Defenseman'		=> 'Defenseman',
 'Goalie'		=> 'Goalie',
+'Goalies'		=> 'Goalies',
+'Players'		=> 'Players',
 'TimePCT'		=> 'Time %',
 'PHY'		=> 'PHY',
 'DF'		=> 'DF',

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php include "Header.php";?>
 <?php
 $Title = (string)"";
@@ -36,9 +37,9 @@ If (file_exists($DatabaseFile) == false){
 
 
 <div style="width:99%;margin:auto;">
-<b>Minimum Games Played: <?php echo $MinimumGamePlayer;?></b><br />
+<b><?php echo $TeamStatLang['MinimumGamesPlayed'] . $MinimumGamePlayer;?></b><br />
 <table class="STHSTableFullW">
-<tr><td colspan="3"><h2 class="STHSProIndividualLeader_Players STHSCenter">Players</h2></td></tr>
+<tr><td colspan="3"><h2 class="STHSProIndividualLeader_Players STHSCenter"><?php echo $TeamLang['Players'];?></h2></td></tr>
 
 <tr><td class="STHSWP49"><table class="tablesorter custom-popup"><thead><tr><th colspan="4" class="sorter-false"><span class="STHSIndividualLeadersTitle"><?php echo $GeneralStatLang['Goals'];?></span></th></tr>
 <tr><th>#</th><th title="Player Name"><?php echo $PlayersLang['PlayerName'];?></th><th title="Games Played">GP</th><th title="Goals">G</th></tr></thead>
@@ -564,7 +565,7 @@ If ($LoopCount > 1){
 	echo "<tr><td colspan=\"4\" class=\"STHSCenter\">No Result</td></tr></table></td></tr>";
 }?>
 
-<tr><td colspan="3"><h2 class="STHSProIndividualLeader_Players STHSCenter">Goalies</h2></td></tr>
+<tr><td colspan="3"><h2 class="STHSProIndividualLeader_Players STHSCenter"><?php echo $TeamLang['Goalies'];?></h2></td></tr>
 
 <tr><td class="STHSWP49"><table class="tablesorter custom-popup"><thead><tr><th colspan="4" class="sorter-false"><span class="STHSIndividualLeadersTitle"><?php echo $GeneralStatLang['SavePCT'];?>
 </span></th></tr>

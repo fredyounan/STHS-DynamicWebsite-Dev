@@ -1,4 +1,5 @@
-﻿<?php include "Header.php";?>
+﻿<!DOCTYPE html>
+<?php include "Header.php";?>
 <?php
 /*
 Syntax to call this webpage should be GoaliesStat.php?Goalie=2 where only the number change and it's based on the UniqueID of Goalies.
