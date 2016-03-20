@@ -9,9 +9,9 @@ If (file_exists($DatabaseFile) == false){
 	$Title = $DatabaseNotFound;
 }else{
 	$Team = (integer)0; /* 0 All Team */
-	$TypeText = (string)"Pro";
+	$TypeText = (string)"Pro";$TitleType = $DynamicTitleLang['Pro'];
 	$LeagueName = (string)"";
-	if(isset($_GET['Farm'])){$TypeText = "Farm";}
+	if(isset($_GET['Farm'])){$TypeText = "Farm";$TitleType = $DynamicTitleLang['Farm'];}
 	if(isset($_GET['Team'])){$Team = filter_var($_GET['Team'], FILTER_SANITIZE_NUMBER_INT);}
 
 	$db = new SQLite3($DatabaseFile);
@@ -23,12 +23,12 @@ If (file_exists($DatabaseFile) == false){
 	$LeagueName = $LeagueGeneral['Name'];
 	
 	If ($Team == 0){
-		$Title = $ScheduleLang['ScheduleTitle1'] . $TypeText . $ScheduleLang['ScheduleTitle2'];
+		$Title = $ScheduleLang['ScheduleTitle1'] . $ScheduleLang['ScheduleTitle2'] . " " . $TitleType;
 		$Query = "SELECT * FROM Schedule" . $TypeText . " ORDER BY GameNumber";
 	}else{
 		$Query = "SELECT Name FROM Team" . $TypeText . "Info WHERE Number = " . $Team ;
 		$TeamName = $db->querySingle($Query);
-		$Title =  $TypeText . $ScheduleLang['TeamTitle'] .  $TeamName;
+		$Title =  $ScheduleLang['TeamTitle'] . $TitleType . " " .  $TeamName;
 		
 		$Query = "SELECT * FROM Schedule" . $TypeText . " WHERE (VisitorTeam = " . $Team . " OR HomeTeam = " . $Team . ") ORDER BY GameNumber";
 	}
@@ -92,7 +92,7 @@ if ($LeagueOutputOption['ScheduleUseDateInsteadofDay'] == TRUE){
 <th title="Visitor Team Score" class="STHSW35"><?php echo $ScheduleLang['Score'];?></th>
 <th title="Home Team" class="STHSW200"><?php echo $ScheduleLang['HomeTeam'];?></th>
 <th title="Home Team Score" class="STHSW35"><?php echo $ScheduleLang['Score'];?></th>
-<th title="Team Name" class="STHSW35">ST</th>
+<th title="Streak" class="STHSW35">ST</th>
 <th title="Overtime" class="STHSW35">OT</th>
 <th title="Shootout" class="STHSW35">SO</th>
 <th title="Rivalry" class="STHSW35">RI</th>

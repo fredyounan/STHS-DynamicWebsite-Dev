@@ -296,6 +296,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 </tr>
 <tr>
 	<td class="STHSW140"><?php echo $SearchLang['AcsendingOrder'];?></td><td class="STHSW250">
+	<?php If ($lang == "fr"){echo "<input type=\"hidden\" name=\"Lang\" value=\"fr\">";}?>
 	<input type="checkbox" name="ACS"></td>
 </tr>
 <tr>
@@ -362,6 +363,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 </tr>
 <tr>
 	<td class="STHSW140"><?php echo $SearchLang['AcsendingOrder'];?></td><td class="STHSW250">
+	<?php If ($lang == "fr"){echo "<input type=\"hidden\" name=\"Lang\" value=\"fr\">";}?>
 	<input type="checkbox" name="ACS">	</td>
 </tr>
 <tr>
@@ -428,6 +430,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 </tr>
 <tr>
 	<td class="STHSW140"><?php echo $SearchLang['DecendingOrder'];?></td><td class="STHSW250">
+	<?php If ($lang == "fr"){echo "<input type=\"hidden\" name=\"Lang\" value=\"fr\">";}?>
 	<input type="checkbox" name="DESC"></td>
 </tr>
 <tr>
@@ -476,7 +479,12 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 	</select></td>
 </tr>
 <tr>
+	<td class="STHSW140"><?php echo $TeamStatLang['MinimumGamesPlayed'];?></td><td class="STHSW250">
+	<input type="checkbox" name="MinGP"></td>
+</tr>
+<tr>
 	<td class="STHSW140"><?php echo $SearchLang['AcsendingOrder'];?></td><td class="STHSW250">
+	<?php If ($lang == "fr"){echo "<input type=\"hidden\" name=\"Lang\" value=\"fr\">";}?>
 	<input type="checkbox" name="ACS"></td>
 </tr>
 <tr>
@@ -525,8 +533,13 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 	</select></td>
 </tr>
 <tr>
+	<td class="STHSW140"><?php echo $TeamStatLang['MinimumGamesPlayed'];?></td><td class="STHSW250">
+	<input type="checkbox" name="MinGP"></td>
+</tr>
+<tr>
 	<td class="STHSW140"><?php echo $SearchLang['AcsendingOrder'];?></td><td class="STHSW250">
-	<input type="checkbox" name="ACS">	</td>
+	<?php If ($lang == "fr"){echo "<input type=\"hidden\" name=\"Lang\" value=\"fr\">";}?>
+	<input type="checkbox" name="ACS"></td>
 </tr>
 <tr>
 	<td colspan="2" class="STHSCenter"><input type="submit" value="Submit"></td>
@@ -563,6 +576,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 </tr>
 <tr>
 	<td class="STHSW140"><?php echo $SearchLang['DecendingOrder'];?></td><td class="STHSW250">
+	<?php If ($lang == "fr"){echo "<input type=\"hidden\" name=\"Lang\" value=\"fr\">";}?>
 	<input type="checkbox" name="DESC"></td>
 </tr>
 <tr>
@@ -581,7 +595,5 @@ jQuery(document).ready(function($){
 	$( "form" ).find( ":input" ).prop( "disabled", false );
 })
 </script>
-
-
 
 <?php include "Footer.php";?>

@@ -10,12 +10,14 @@ If (file_exists($DatabaseFile) == false){
 	$Transaction = Null;
 	$Schedule = Null;
 	echo "<title>" . $DatabaseNotFound . "</title>";
+	echo "<style type=\"text/css\">";
+	echo ".STHSIndex_Main{display:none;}";
 }else{
 	$LeagueName = (string)"";
 	
 	$db = new SQLite3($DatabaseFile);
 	
-	$Query = "Select Name, ScheduleNextDay, DefaultSimulationPerDay  from LeagueGeneral";
+	$Query = "Select Name, ScheduleNextDay, DefaultSimulationPerDay, OffSeason from LeagueGeneral";
 	$LeagueGeneral = $db->querySingle($Query,true);		
 	$LeagueName = $LeagueGeneral['Name'];	
 	
@@ -32,8 +34,8 @@ If (file_exists($DatabaseFile) == false){
 	$Schedule = $db->query($Query);
 	
 	echo "<title>" . $LeagueName . " - " . $IndexLang['IndexTitle'] . "</title>";
+	echo "<style type=\"text/css\">";
 }?>
-<style type="text/css">
 .carousel {	border: 1px solid rgb(186, 186, 186); border-image: none; left: -5000px; float: left; visibility: hidden; position: relative}
 .carousel > ul > li  {	border: 1px solid rgb(186, 186, 186);}
 a.prev {	border-radius: 8px; width: 26px; height: 30px; color: ghostwhite; line-height: 1; font-family: Arial, sans-serif; font-size: 25px; text-decoration: none; float: left; display: block; background-color: rgb(51, 51, 51); -moz-border-radius: 30px; -webkit-border-radius: 30px;}
@@ -44,12 +46,21 @@ a.prev:hover {background-color: rgb(102, 102, 102);}
 a.next:hover {background-color: rgb(102, 102, 102);}
 .CarouselTable {border-width: 0.5px;border-style: solid;border-collapse: collapse;}
 .CarouselTable th {font-weight: bold;}
-@media screen and (max-width: 890px) {.STHSIndex_Score{display:none;}}
-@media screen and (max-width: 1200px) {.STHSIndex_Top5 {display:none;}.STHSIndex_OutputSetting_Table{display:none;}
+<?php 
+If ($LeagueGeneral['OffSeason'] == "True"){
+	echo ".STHSIndex_Score{display:none;}";
+	echo ".STHSIndex_Top5Table {display:none;}";
+	echo "@media screen and (max-width: 890px) {.STHSIndex_Top5 {display:none;}}";
+}else{
+	echo ".STHSIndex_Top20FreeAgents {display:none;}";
+	echo "@media screen and (max-width: 890px) {.STHSIndex_Score{display:none;}}";
+	echo "@media screen and (max-width: 1200px) {.STHSIndex_Top5 {display:none;}}";
+}?>
 </style>
 </head><body>
-<?php include "Menu.php";?>
-
+<?php include "Menu.php";
+If (file_exists($DatabaseFile) == false){echo "<br /><br /><h1 class=\"STHSCenter\">" . $DatabaseNotFound . "</h1>";}
+?>
 <table class="STHSIndex_Main"><tr><td class="STHSIndex_Score">
 <table class="STHSTableFullW"><tr><td>
 <div class="STHSIndex_LastestResult"><?php echo $IndexLang['LatestScores'];?></div>
@@ -111,6 +122,22 @@ $PlayerStat = $db->query($Query);
 if (empty($PlayerStat) == false){while ($Row = $PlayerStat ->fetchArray()) {
 	echo "<tr><td><a href=\"GoalieReport.php?Goalie=" . $Row['Number'] . "\">" . $Row['Name'] . " (" . $Row['Abbre'] . ")</a></td><td>" . $Row['W'] . " - " . number_Format($Row['PCT'],3) .  "</td></tr>\n";
 }}?>
-</table></td></tr></table>
+</table>
+<table class="STHSIndex_Top20FreeAgents">
+<tr><th colspan="2" class="STHSTop5"><?php echo $IndexLang['Top20FreeAgents'];?></th></tr>
+<tr><td class="STHSIndex_Top5PointNameHeader"><?php echo $PlayersLang['PlayerName'];?></td><td class="STHSIndex_Top5PointResultHeader">Overall-Age</td></tr>
+<?php
+$Query = "SELECT MainTable.*, GoalerInfo.PosG FROM ((SELECT PlayerInfo.Number, PlayerInfo.Name, PlayerInfo.Team, PlayerInfo.Age, PlayerInfo.Contract, PlayerInfo.SalaryAverage, PlayerInfo.Salary1, PlayerInfo.Overall FROM PlayerInfo WHERE Team >= 0 AND Number > 0 UNION ALL SELECT GoalerInfo.Number, GoalerInfo.Name, GoalerInfo.Team, GoalerInfo.Age, GoalerInfo.Contract, GoalerInfo.SalaryAverage, GoalerInfo.Salary1, GoalerInfo.Overall FROM GoalerInfo WHERE Team >= 0 AND Number > 0) AS MainTable) LEFT JOIN GoalerInfo ON MainTable.Name = GoalerInfo.Name WHERE (MainTable.Team >= 0 AND MainTable.Contract = 0) OR (MainTable.Team = 0) ORDER BY MainTable.Overall DESC LIMIT 20";
+$PlayerStat = $db->query($Query);
+if (empty($PlayerStat) == false){while ($Row = $PlayerStat ->fetchArray()) {
+	echo "<tr><td>";
+	if ($Row['PosG']== "True"){echo "<a href=\"GoalieReport.php?Goalie=";}else{echo "<a href=\"PlayerReport.php?Player=";}
+	Echo $Row['Number'] . "\">" . $Row['Name'] . "</a></td>";
+	echo "<td>" . $Row['Overall'] . " - " . $Row['Age'] . "</td></tr>\n";
+}}?>
+</table>
+</td>
+</tr>
+</table>
 
 <?php include "Footer.php";?>

@@ -7,10 +7,10 @@ If (file_exists($DatabaseFile) == false){
 	echo "<title>" . $DatabaseNotFound . "</title>";
 	$Title = $DatabaseNotFound;
 }else{
-	$TypeText = (string)"Pro";
+	$TypeText = (string)"Pro";$TitleType = $DynamicTitleLang['Pro'];
 	$MaximumResult = (integer)10;
 	$MinimumGamePlayer = (integer)1;
-	if(isset($_GET['Farm'])){$TypeText = "Farm";}
+	if(isset($_GET['Farm'])){$TypeText = "Farm";$TitleType = $DynamicTitleLang['Farm'];}
 	if(isset($_GET['Max'])){$MaximumResult = filter_var($_GET['Max'], FILTER_SANITIZE_NUMBER_INT);} 
 	$LeagueName = (string)"";
 	
@@ -21,7 +21,7 @@ If (file_exists($DatabaseFile) == false){
 	$Query = "Select ProMinimumGamePlayerLeader, FarmMinimumGamePlayerLeader from LeagueOutputOption";
 	$LeagueOutputOption = $db->querySingle($Query,true);		
 	
-	$Title = $LeagueName . " - " . $TypeText . " " . $DynamicTitleLang['IndividualLeadersTitle'];
+	$Title = $LeagueName . " - " . $DynamicTitleLang['IndividualLeadersTitle'] . " " . $TitleType ;
 	If ($TypeText == "Pro"){
 		$MinimumGamePlayer = $LeagueOutputOption['ProMinimumGamePlayerLeader'];
 	}elseif($TypeText == "Farm"){

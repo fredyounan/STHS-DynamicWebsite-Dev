@@ -9,14 +9,15 @@ If (file_exists($DatabaseFile) == false){
 	echo "<title>" . $DatabaseNotFound . "</title>";
 	$Title = $DatabaseNotFound;
 }else{
-	$TypeText = (string)"Pro";
+	$TypeText = (string)"Pro";$TitleType = $DynamicTitleLang['Pro'];
 	$ACSQuery = (boolean)FALSE;/* The SQL Query must be Ascending Order and not Descending */
 	$MaximumResult = (integer)0;
+	$MinimumGP = (integer)0;
 	$OrderByField = (string)"W";
 	$OrderByFieldText = (string)"Win";
 	$OrderByInput = (string)"";
 	$TitleOverwrite = (string)"";
-	if(isset($_GET['Farm'])){$TypeText = "Farm";}
+	if(isset($_GET['Farm'])){$TypeText = "Farm";$TitleType = $DynamicTitleLang['Farm'];}
 	if(isset($_GET['ACS'])){$ACSQuery= TRUE;}
 	if(isset($_GET['Max'])){$MaximumResult = filter_var($_GET['Max'], FILTER_SANITIZE_NUMBER_INT);} 
 	if(isset($_GET['Order'])){$OrderByInput = filter_var($_GET['Order'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH);} 
@@ -62,19 +63,21 @@ If (file_exists($DatabaseFile) == false){
 	$LeagueGeneral = $db->querySingle($Query,true);		
 	$LeagueName = $LeagueGeneral['Name'];
 	
+	if(isset($_GET['MinGP'])){
+		$Query = "Select " . $TypeText . "MinimumGamePlayerLeader AS MinimumGamePlayerLeader from LeagueOutputOption";
+		$LeagueOutputOption = $db->querySingle($Query,true);	
+		$MinimumGP = $LeagueOutputOption['MinimumGamePlayerLeader'];
+	}
+	
 	If($MaximumResult == 0){$Title = $DynamicTitleLang['All'];}else{$Title = $DynamicTitleLang['Top'] . $MaximumResult . " ";}
-	$Query = "SELECT GoalerInfo.TeamName, Goaler" . $TypeText . "Stat.*, ROUND((CAST(Goaler" . $TypeText . "Stat.GA AS REAL) / (Goaler" . $TypeText . "Stat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(Goaler" . $TypeText . "Stat.SA - Goaler" . $TypeText . "Stat.GA AS REAL) / (Goaler" . $TypeText . "Stat.SA)),3) AS PCT, ROUND((CAST(Goaler" . $TypeText . "Stat.PenalityShotsShots - Goaler" . $TypeText . "Stat.PenalityShotsGoals AS REAL) / (Goaler" . $TypeText . "Stat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN Goaler" . $TypeText . "Stat ON GoalerInfo.Number = Goaler" . $TypeText . "Stat.Number WHERE Goaler" . $TypeText . "Stat.GP > 0";
+	$Query = "SELECT GoalerInfo.TeamName, Goaler" . $TypeText . "Stat.*, ROUND((CAST(Goaler" . $TypeText . "Stat.GA AS REAL) / (Goaler" . $TypeText . "Stat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(Goaler" . $TypeText . "Stat.SA - Goaler" . $TypeText . "Stat.GA AS REAL) / (Goaler" . $TypeText . "Stat.SA)),3) AS PCT, ROUND((CAST(Goaler" . $TypeText . "Stat.PenalityShotsShots - Goaler" . $TypeText . "Stat.PenalityShotsGoals AS REAL) / (Goaler" . $TypeText . "Stat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerInfo INNER JOIN Goaler" . $TypeText . "Stat ON GoalerInfo.Number = Goaler" . $TypeText . "Stat.Number WHERE Goaler" . $TypeText . "Stat.GP > " . $MinimumGP;
 	if($Team > 0){
 		$Query = $Query . " AND Team = " . $Team;
 		$QueryTeam = "SELECT Name FROM Team" . $TypeText . "Info WHERE Number = " . $Team;
 		$TeamName = $db->querySingle($QueryTeam,true);	
 		$Title = $Title . $TeamName['Name'];
 	}
-	If ($TypeText == "Pro"){
-		$Title = $Title  . $DynamicTitleLang['GoaliesStat'] . $DynamicTitleLang['Pro'];
-	}elseif($TypeText == "Farm"){
-		$Title = $Title  . $DynamicTitleLang['GoaliesStat'] . $DynamicTitleLang['Farm'];
-	}
+	$Title = $Title  . $DynamicTitleLang['GoaliesStat'] . $TitleType;
 	If ($OrderByField == "PCT" OR $OrderByField == "GAA" OR $OrderByField == "PenalityShotsPCT"){$Query = $Query . " ORDER BY " . $OrderByField;}else{$Query = $Query . " ORDER BY Goaler" . $TypeText . "Stat." . $OrderByField;}
 
 	If ($ACSQuery == TRUE){
@@ -86,6 +89,8 @@ If (file_exists($DatabaseFile) == false){
 	}
 	If ($MaximumResult > 0){$Query = $Query . " LIMIT " . $MaximumResult;}
 	$GoalieStat = $db->query($Query);
+	
+	if(isset($_GET['MinGP'])){$Title = $Title . " - " . $TeamStatLang['MinimumGamesPlayed'] . $MinimumGP;}
 
 	/* OverWrite Title if information is get from PHP GET */
 	if($TitleOverwrite <> ""){$Title = $TitleOverwrite;}	

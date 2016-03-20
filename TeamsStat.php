@@ -9,14 +9,14 @@ If (file_exists($DatabaseFile) == false){
 	$Title = $DatabaseNotFound;
 }else{
 	$DESCQuery = (boolean)FALSE;/* The SQL Query must be Descending Order and not Ascending*/
-	$TypeText = (string)"Pro";
+	$TypeText = (string)"Pro";$TitleType = $DynamicTitleLang['Pro'];
 	$LeagueName = (string)"";
 	$OrderByField = (string)"Name";
 	$OrderByFieldText = (string)"Team Name";
 	$OrderByInput = (string)"";
 	$Team = (integer)0;
 	if(isset($_GET['DESC'])){$DESCQuery= TRUE;}
-	if(isset($_GET['Farm'])){$TypeText = "Farm";}
+	if(isset($_GET['Farm'])){$TypeText = "Farm";$TitleType = $DynamicTitleLang['Farm'];}
 	if(isset($_GET['Team'])){$Team = filter_var($_GET['Team'], FILTER_SANITIZE_NUMBER_INT);}
 	if(isset($_GET['Order'])){$OrderByInput  = filter_var($_GET['Order'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH);} 
 	
@@ -95,11 +95,11 @@ If (file_exists($DatabaseFile) == false){
 	
 	If ($Team == 0){
 		$Query = "SELECT Team" . $TypeText . "Stat.* FROM Team" . $TypeText . "Stat ORDER BY Team" . $TypeText . "Stat.". $OrderByField;
-		$Title = $TypeText . $DynamicTitleLang['TeamStat'];
+		$Title = $DynamicTitleLang['TeamStat'] . " " . $TitleType;
 	}else{
 		$Query = "SELECT Name FROM Team" . $TypeText . "Info WHERE Number = " . $Team ;
 		$TeamName = $db->querySingle($Query);
-		$Title = $TeamName . " " . $TypeText . $DynamicTitleLang['TeamStatVS'];
+		$Title = $DynamicTitleLang['TeamStatVS'] . " " . $TitleType . " " . $TeamName . " ";
 		If ($OrderByField == "Name"){$OrderByField = "TeamVSName";}
 		$Query = "SELECT Team" . $TypeText . "StatVS.* FROM Team" . $TypeText . "StatVS WHERE GP > 0 AND TeamNumber = " . $Team . " ORDER BY Team" . $TypeText . "StatVS." . $OrderByField;
 	}
@@ -176,6 +176,7 @@ $(function() {
 <th data-priority="1" title="Overall Games Played" class="STHSW25">GP</th>
 <th data-priority="1" title="Overall Wins" class="STHSW25">W</th>
 <th data-priority="1" title="Overall Loss" class="STHSW25">L</th>
+<th data-priority="6" title="Overall Ties" class="columnSelector-false STHSW35">T</th>
 <th data-priority="1" title="Overall Overtime Wins" class="STHSW25">OTW</th>
 <th data-priority="1" title="Overall Overtime Loss" class="STHSW25">OTL</th>
 <th data-priority="1" title="Overall Shootout Wins" class="STHSW25">SOW</th>
@@ -186,6 +187,7 @@ $(function() {
 <th data-priority="3" title="Home Games Played" class="STHSW25">GP</th>
 <th data-priority="3" title="Home Wins" class="STHSW25">W</th>
 <th data-priority="3" title="Home Loss" class="STHSW25">L</th>
+<th data-priority="6" title="Home Ties" class="columnSelector-false STHSW35">T</th>
 <th data-priority="3" title="Home Overtime Wins" class="STHSW25">OTW</th>
 <th data-priority="3" title="Home Overtime Loss" class="STHSW25">OTL</th>
 <th data-priority="3" title="Home Shootout Wins" class="STHSW25">SOW</th>
@@ -196,6 +198,7 @@ $(function() {
 <th data-priority="5" title="Visitor Games Played" class="columnSelector-false STHSW25">GP</th>
 <th data-priority="5" title="Visitor Wins" class="columnSelector-false STHSW25">W</th>
 <th data-priority="5" title="Visitor Loss" class="columnSelector-false STHSW25">L</th>
+<th data-priority="6" title="Visitor Ties" class="columnSelector-false STHSW35">T</th>
 <th data-priority="5" title="Visitor Overtime Wins" class="columnSelector-false STHSW25">OTW</th>
 <th data-priority="5" title="Visitor Overtime Loss" class="columnSelector-false STHSW25">OTL</th>
 <th data-priority="5" title="Visitor Shootout Wins" class="columnSelector-false STHSW25">SOW</th>
@@ -257,6 +260,7 @@ if (empty($TeamStat) == false){while ($row = $TeamStat ->fetchArray()) {
 	echo "<td>" . $row['GP'] . "</td>";
 	echo "<td>" . $row['W']  . "</td>";
 	echo "<td>" . $row['L'] . "</td>";
+	echo "<td>" . $row['T'] . "</td>";
 	echo "<td>" . $row['OTW'] . "</td>";	
 	echo "<td>" . $row['OTL'] . "</td>";	
 	echo "<td>" . $row['SOW'] . "</td>";	
@@ -267,6 +271,7 @@ if (empty($TeamStat) == false){while ($row = $TeamStat ->fetchArray()) {
 	echo "<td>" . $row['HomeGP'] . "</td>";
 	echo "<td>" . $row['HomeW']  . "</td>";
 	echo "<td>" . $row['HomeL'] . "</td>";
+	echo "<td>" . $row['HomeT'] . "</td>";
 	echo "<td>" . $row['HomeOTW'] . "</td>";	
 	echo "<td>" . $row['HomeOTL'] . "</td>";	
 	echo "<td>" . $row['HomeSOW'] . "</td>";	
@@ -277,6 +282,7 @@ if (empty($TeamStat) == false){while ($row = $TeamStat ->fetchArray()) {
 	echo "<td>" . ($row['GP'] - $row['HomeGP']) . "</td>";
 	echo "<td>" . ($row['W'] - $row['HomeW']) . "</td>";
 	echo "<td>" . ($row['L'] - $row['HomeL']) . "</td>";
+	echo "<td>" . ($row['T'] - $row['HomeT']) . "</td>";	
 	echo "<td>" . ($row['OTW'] - $row['HomeOTW']) . "</td>";
 	echo "<td>" . ($row['OTL'] - $row['HomeOTL']) . "</td>";
 	echo "<td>" . ($row['SOW'] - $row['HomeSOW']) . "</td>";

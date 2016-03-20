@@ -44,7 +44,7 @@ $CoachesLang = array(
 $ScheduleLang = array(
 'ScheduleTitle1'		=> 'League ',
 'ScheduleTitle2'		=> ' Schedule',
-'TeamTitle'			=> ' Schedule for ',
+'TeamTitle'			=> ' Schedule ',
 'Day'			=> 'Day',
 'Game'			=> 'Game',
 'VisitorTeam'			=> 'Visitor Team',
@@ -140,8 +140,8 @@ $DynamicTitleLang = array(
 'GoaliesRoster'			=> ' Goalies Roster',
 'GoaliesStat'			=> ' Goalies Stats',
 'PlayersStat'			=> ' Players Stats',
-'TeamStat'			=> ' Team Stats',
-'TeamStatVS'			=> ' Team Stats VS',
+'TeamStat'			=> 'Team Stats',
+'TeamStatVS'			=> 'Team Stats VS',
 'PlayersInformation'			=> ' Players Information',
 'ThisYearFreeAgents'			=> ' This Year Free Agents',
 'NextYearFreeAgents'			=> ' Next Year Free Agents',
@@ -164,11 +164,14 @@ $TeamStatLang = array(
 );
 
 $StandingLang = array(
-'Standing'		=> ' Standing',
+'Standing'		=> 'Standing',
 'Wildcard'		=> 'Wildcard',
 'Conference'		=> 'Conference',
 'Division'		=> 'Division',
 'Overall'		=> 'Overall',
+'Playoff'		=> 'Playoff',
+'Round'		=> 'Round : ',
+'WinsPlayoff'		=> ' wins the playoff!',
 );
 
 $TeamLang = array(
@@ -334,6 +337,8 @@ $TodayGamesLang = array(
 'ProGames'		=> 'Pro Games ',
 'FarmGames'		=> 'Farm Games ',
 'UnknownGames'		=> 'Unknown Games',
+'NextGames' 	=> 'Next Games',
+'Today3Star' 	=> 'Today 3 Star : ',
 );
 
 $GeneralStatLang = array(
@@ -399,6 +404,30 @@ $GeneralStatLang = array(
 'FightLost'		=> 'Fight Lost',
 'FightTies'		=> 'Fight Ties',
 'OvertimeLosses'		=> 'Overtime Losses',
+);
+
+$PowerRankingLang = array(
+'PowerRanking'		=> 'Power Ranking',
+'ActualRank'			=> 'Actual Rank',
+'LastRank'		=> 'Last Rank',
+'TeamName'			=> 'Team Name',
+);
+
+$TeamAndGMLang = array(
+'TeamAndGM'		=> 'Teams And General Manager Information',
+'TeamName'			=> 'Team Name',
+'GeneralManager'		=> 'General Manager',
+'InstantMessenger'			=> 'Instant Messenger',
+'Email'			=> 'Email',
+'City'			=> 'City',
+'Arena'			=> 'Arena',
+'FarmTeamName'			=> 'Farm Team Name',
+'LastFileLoadDate'			=> 'Last File Load Date',
+'LoadLines'			=> '# of Load Lines',
+'FailAutoRoster'			=> '# of Fail Auto Roster',
+'FailProAutoLine'			=> '# of Fail Pro Auto Line',
+'FailFarmAutoLine'			=> '# of Fail Farm Auto Line',
+'FailSimulation'			=> '# of Fail Simulation',
 );
 
 /* End EN Language Pack */

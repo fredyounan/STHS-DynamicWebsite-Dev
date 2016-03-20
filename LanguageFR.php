@@ -44,7 +44,7 @@ $CoachesLang = array(
 $ScheduleLang = array(
 'ScheduleTitle1'		=> 'Ligue ',
 'ScheduleTitle2'		=> ' Calendrier',
-'TeamTitle'			=> ' Calendrier pour ',
+'TeamTitle'			=> ' Calendrier ',
 'Day'			=> 'Jour',
 'Game'			=> 'Match',
 'VisitorTeam'			=> 'Équipe Visiteuse',
@@ -140,8 +140,8 @@ $DynamicTitleLang = array(
 'GoaliesRoster'			=> ' Formation des Gardiens',
 'GoaliesStat'			=> ' Statistiques des Gardiens',
 'PlayersStat'			=> ' Statistiques des Joueurs',
-'TeamStat'			=> ' Statistiques d\'Équipe',
-'TeamStatVS'			=> ' Statistiques d\'Équipe VS',
+'TeamStat'			=> 'Statistiques d\'Équipe',
+'TeamStatVS'			=> 'Statistiques d\'Équipe VS',
 'PlayersInformation'			=> ' Information des Joueurs',
 'ThisYearFreeAgents'			=> ' Agents Libres Cette Année',
 'NextYearFreeAgents'			=> ' Agents Libres l\'Année Prochaine',
@@ -164,11 +164,14 @@ $TeamStatLang = array(
 );
 
 $StandingLang = array(
-'Standing'		=> ' Classement',
+'Standing'		=> 'Classement',
 'Wildcard'		=> 'Quatrième As',
 'Conference'		=> 'Conférence',
 'Division'		=> 'Division',
 'Overall'		=> 'Ligue',
+'Playoff'		=> 'Séries',
+'Round'		=> 'Ronde : ',
+'WinsPlayoff'		=> ' a gagné les séries!',
 );
 
 $TeamLang = array(
@@ -334,6 +337,8 @@ $TodayGamesLang = array(
 'ProGames'		=> 'Matchs Pro ',
 'FarmGames'		=> 'Matchs École ',
 'UnknownGames'		=> 'Matchs Inconnus',
+'NextGames' 	=> 'Prochain matchs',
+'Today3Star' 	=> '3 Étoiles de la journée : ',
 );
 
 $GeneralStatLang = array(
@@ -399,6 +404,30 @@ $GeneralStatLang = array(
 'FightLost'		=> 'Combats Perdus',
 'FightTies'		=> 'Combats Effectués',
 'OvertimeLosses'		=> 'Défaites en Prolongation',
+);
+
+$PowerRankingLang = array(
+'PowerRanking'		=> 'Puissance Classement',
+'ActualRank'			=> 'Rang Actuel',
+'LastRank'		=> 'Dernier Rang',
+'TeamName'			=> 'Nom de l\'Équipe',
+);
+
+$TeamAndGMLang = array(
+'TeamAndGM'		=> 'Information d\'équipes et de Directeurs généraux',
+'TeamName'			=> 'Nom de l\'Équipe',
+'GeneralManager'		=> 'Directeur général',
+'InstantMessenger'			=> 'Messagerie instantanée',
+'Email'			=> 'Courriel',
+'City'			=> 'Ville',
+'Arena'			=> 'Aréna',
+'FarmTeamName'			=> 'Nom de l\'Équipe École',
+'LastFileLoadDate'			=> 'Date du Dernier Changement Alignement',
+'LoadLines'			=> '# de Alignement Chargé',
+'FailAutoRoster'			=> '# D\'alignements automatiques échoués',
+'FailProAutoLine'			=> '# De lignes pro automatiques échoués',
+'FailFarmAutoLine'			=> '# De lignes école automatiques échoués',
+'FailSimulation'			=> '# De simulations échoués',
 );
 
  /* End FR Language Pack */
