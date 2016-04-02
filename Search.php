@@ -203,7 +203,7 @@ $LeagueName = (string)"";
 
 If (file_exists($DatabaseFile) == false){
 	$LeagueName = $DatabaseNotFound;
-	$Coach = Null;
+	$TeamName = Null;
 }else{
 	$db = new SQLite3($DatabaseFile);
 	$Query = "SELECT Number, Name FROM TeamProInfo Order By Name";
@@ -233,6 +233,7 @@ echo "<title>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</title>";
 </style>
 </head><body>
 <?php include "Menu.php";?>
+<?php echo "<h1>" . $LeagueName . " - " . $SearchLang['SearchTitle'] . "</h1>";?>
 <br />
 
 <div class="SearchDiv">

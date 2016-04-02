@@ -64,11 +64,15 @@ If (file_exists($DatabaseFile) == false){
 	$LeagueName = $LeagueGeneral['Name'];
 	$Query = "Select SalaryCapOption from LeagueFinance";
 	$LeagueFinance = $db->querySingle($Query,true);		
-	$Query = "Select MergeRosterPlayerInfo from LeagueOutputOption";
+	$Query = "Select MergeRosterPlayerInfo, FreeAgentUseDateInsteadofDay, FreeAgentRealDate from LeagueOutputOption";
 	$LeagueOutputOption = $db->querySingle($Query,true);	
 	
-	$Query = "SELECT * FROM PlayerInfo";
-	
+	If ($FreeAgentYear == 1){
+		$Query = "SELECT PlayerInfo.*, NextYearFreeAgent.PlayerType AS NextYearFreeAgentPlayerType FROM PlayerInfo LEFT JOIN NextYearFreeAgent ON PlayerInfo.Number = NextYearFreeAgent.Number";
+	}else{
+		$Query = "SELECT * FROM PlayerInfo";
+	}
+		
 	/* Team or All */
 	if($Team >= 0){
 		if($Team > 0){
@@ -78,26 +82,26 @@ If (file_exists($DatabaseFile) == false){
 		}else{
 			$Title = $DynamicTitleLang['Unassigned'];
 		}
-		$Query = $Query . " WHERE Team = " . $Team;
+		$Query = $Query . " WHERE PlayerInfo.Team = " . $Team;
 	}else{
-		if($Type == 1 Or $Type == 2){$Query = $Query . " WHERE Number > 0"; /* Default Place Order Where everything will return */ }
+		if($Type == 1 Or $Type == 2){$Query = $Query . " WHERE PlayerInfo.Number > 0"; /* Default Place Order Where everything will return */ }
 	}
 	
 	If($MaximumResult == 0){$Title = $Title . $DynamicTitleLang['All'];}else{$Title = $Title . $DynamicTitleLang['Top'] .$MaximumResult;}
 	
 	/* Pro Only or Farm  */
 	if($Type == 1){
-		$Query = $Query . " AND Status1 >= 2";
+		$Query = $Query . " AND PlayerInfo.Status1 >= 2";
 		$Title = $Title . $DynamicTitleLang['Pro'];
 	}elseif($Type == 2){
-		$Query = $Query . " AND Status1 <= 1";
+		$Query = $Query . " AND PlayerInfo.Status1 <= 1";
 		$Title = $Title . $DynamicTitleLang['Farm'];
 	}
 	
 	/* Free Agents */
 	If ($FreeAgentYear >= 0){
-		if($Type == 0 AND $Team == -1){$Query = $Query . " WHERE Team > 0";}
-		$Query = $Query . " AND Contract = " . $FreeAgentYear; /* Free Agent Query */ 
+		if($Type == 0 AND $Team == -1){$Query = $Query . " WHERE PlayerInfo.Team > 0";}
+		$Query = $Query . " AND PlayerInfo.Contract = " . $FreeAgentYear; /* Free Agent Query */ 
 		If ($FreeAgentYear == 0){$Title = $Title . $DynamicTitleLang['ThisYearFreeAgents'];}elseIf ($FreeAgentYear == 1){$Title = $Title . $DynamicTitleLang['NextYearFreeAgents'];}else{$Title = $Title . " " . $FreeAgentYear . $DynamicTitleLang['YearsFreeAgents'];}
 	}
 	
@@ -251,7 +255,14 @@ if (empty($PlayerRoster) == false){while ($Row = $PlayerRoster ->fetchArray()) {
 	if ($FreeAgentYear == -1){
 		echo "<td>";if ($Row['AvailableforTrade']== "True"){ echo "X";}; echo"</td>";
 	}else{
-		if ($Row['Age'] >= $LeagueGeneral['UFAAge']){echo "<td>" . $PlayersLang['UFA'] . "</td>";}elseif($Row['Age'] >= $LeagueGeneral['RFAAge']){echo "<td>" . $PlayersLang['RFA'] . "</td>";}else{echo "<td></td>";}
+		If ($FreeAgentYear == 1 AND $Row['NextYearFreeAgentPlayerType']=="True"){
+			echo "<td>" . $PlayersLang['AlreadyResign'] . "</td>";
+		}elseif ($LeagueOutputOption['FreeAgentUseDateInsteadofDay'] == "True" AND $FreeAgentYear == 1){
+			$age = date_diff(date_create($Row['AgeDate']), date_create($LeagueOutputOption['FreeAgentRealDate']))->y;
+			if ($age >= $LeagueGeneral['UFAAge']){echo "<td>" . $PlayersLang['UFA'] . "</td>";}elseif($age >= $LeagueGeneral['RFAAge']){echo "<td>" . $PlayersLang['RFA'] . "</td>";}else{echo "<td></td>";}
+		}else{
+			if ($Row['Age'] >= $LeagueGeneral['UFAAge']){echo "<td>" . $PlayersLang['UFA'] . "</td>";}elseif($Row['Age'] >= $LeagueGeneral['RFAAge']){echo "<td>" . $PlayersLang['RFA'] . "</td>";}else{echo "<td></td>";}
+		}	
 	}
 	echo "<td>" . $Row['StarPower'] . "</td>";
 	if ($LeagueOutputOption['MergeRosterPlayerInfo'] == "True"){ 	
@@ -268,6 +279,16 @@ if (empty($PlayerRoster) == false){while ($Row = $PlayerRoster ->fetchArray()) {
 }}
 ?>
 </tbody></table>
+<?php 
+if ($FreeAgentYear >= 0){
+	echo "<em>"  . $DynamicTitleLang['FreeAgentStatus'];
+	if ($LeagueOutputOption['FreeAgentUseDateInsteadofDay'] == "True" AND $FreeAgentYear == 1){
+		echo date_Format(date_create($LeagueOutputOption['FreeAgentRealDate']),"Y-m-d") . "</em>";
+	}else{
+		echo date("Y-m-d") . "</em>";
+	}
+}
+?>
 <br />
 </div>
 

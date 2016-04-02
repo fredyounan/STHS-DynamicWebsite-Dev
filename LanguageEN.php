@@ -130,6 +130,7 @@ $PlayersLang = array(
 'CanPlayFarm'			=> 'Can Play Farm',
 'ExcludefromSalaryCap'			=> 'Exclude from Salary Cap',
 'ProSalaryinFarm'			=> 'Pro Salary in Farm / 1 Way Contract',
+'AlreadyResign'			=> 'Already Resign',
 );
 
 $DynamicTitleLang = array(
@@ -152,6 +153,7 @@ $DynamicTitleLang = array(
 'All'			=> ' All',
 'Top'			=> ' Top ',
 'IndividualLeadersTitle'		=> 'Individual Leaders',
+'FreeAgentStatus'		=> 'Players Status were calculated based on Date of : ',
 );
 
 $TeamStatLang = array(

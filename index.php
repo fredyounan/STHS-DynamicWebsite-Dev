@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <?php include "Header.php";?>
 <script type="text/javascript">
 /*! jCarouselLite - v1.1 - 2014-09-28  */

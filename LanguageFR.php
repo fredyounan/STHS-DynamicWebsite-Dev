@@ -107,8 +107,8 @@ $PlayersLang = array(
 '1WayContract'			=> ' (Contrat à 1 Volet)',
 'OutofPayroll'			=> ' (Sur la Masse Salariale)',
 'Link'			=> 'Lien',
-'UFA'			=> 'Agent Libre Sans Restriction',
-'RFA'			=> 'Agent Libre Avec Restriction',
+'UFA'			=> 'Sans Restriction',
+'RFA'			=> 'Avec Restriction',
 'IncorrectPlayer'		=> 'Joueur Incorrecte',
 'Playernotfound'		=> 'Joueur Non Trouvé',
 'IncorrectGoalie'		=> 'Gardien Incorrect',
@@ -130,6 +130,7 @@ $PlayersLang = array(
 'CanPlayFarm'			=> 'Peut Jouer École',
 'ExcludefromSalaryCap'			=> 'Exclus du Cap Salarial',
 'ProSalaryinFarm'			=> 'Salaire Pro dans l\'École / Contrat à 1 Volet',
+'AlreadyResign'			=> 'Déjà resigné',
 );
 
 $DynamicTitleLang = array(
@@ -152,6 +153,7 @@ $DynamicTitleLang = array(
 'All'			=> ' Tous ',
 'Top'			=> ' Meilleur ',
 'IndividualLeadersTitle'		=> 'Meneurs Individuels',
+'FreeAgentStatus'		=> 'Le status des joueurs a été calcul basé sur le date : ',
 );
 
 $TeamStatLang = array(

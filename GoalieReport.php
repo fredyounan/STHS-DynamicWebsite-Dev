@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <?php include "Header.php";?>
 <?php
 /*
@@ -33,7 +33,9 @@ If ($Goalie == 0){
 		$Query = "SELECT GoalerFarmStat.*, ROUND((CAST(GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SecondPlay / 60))*60,3) AS GAA, ROUND((CAST(GoalerFarmStat.SA - GoalerFarmStat.GA AS REAL) / (GoalerFarmStat.SA)),3) AS PCT, ROUND((CAST(GoalerFarmStat.PenalityShotsShots - GoalerFarmStat.PenalityShotsGoals AS REAL) / (GoalerFarmStat.PenalityShotsShots)),3) AS PenalityShotsPCT FROM GoalerFarmStat WHERE Number = " . $Goalie;
 		$GoalieFarmStat = $db->querySingle($Query,true);
 		$Query = "Select Name, OutputName from LeagueGeneral";
-		$LeagueGeneral = $db->querySingle($Query,true);		
+		$LeagueGeneral = $db->querySingle($Query,true);	
+		$Query = "Select PlayersMugShotBaseURL, PlayersMugShotFileExtension from LeagueOutputOption";
+		$LeagueOutputOption = $db->querySingle($Query,true);			
 		
 		$LeagueName = $LeagueGeneral['Name'];		
 		$GoalieName = $GoalieInfo['Name'];	
@@ -51,7 +53,15 @@ echo "<title>" . $LeagueName . " - " . $GoalieName . "</title>";
 <?php include "Menu.php";?>
 <br />
 
-<div class="STHSPHPPlayerStat_PlayerNameHeader"><?php echo $GoalieName . " - " . $GoalieInfo['TeamName']; ?></div><br />
+<div class="STHSPHPPlayerStat_PlayerNameHeader">
+<?php
+If ($LeagueOutputOption['PlayersMugShotBaseURL'] != "" AND $LeagueOutputOption['PlayersMugShotFileExtension'] != "" AND $GoalieInfo['NHLID'] != ""){
+	echo "<table class=\"STHSTableFullW STHSPHPPlayerMugShot\"><tr><td>" . $GoalieName . "<br /><br />" . $GoalieInfo['TeamName'];
+	echo "</td><td><img src=\"" . $LeagueOutputOption['PlayersMugShotBaseURL'] . $GoalieInfo['NHLID'] . "." . $LeagueOutputOption['PlayersMugShotFileExtension'] . "\" alt=\"" . $GoalieName . "\" /></td></tr></table>";
+}else{
+	echo $GoalieName . " - " . $GoalieInfo['TeamName'];
+}
+ ?></div><br />
 
 <div class="STHSPHPPlayerStat_Main">
 <br />

@@ -33,7 +33,9 @@ If ($Player == 0){
 		$Query = "SELECT * FROM PlayerFarmStat WHERE Number = " . $Player;
 		$PlayerFarmStat = $db->querySingle($Query,true);
 		$Query = "Select Name, OutputName from LeagueGeneral";
-		$LeagueGeneral = $db->querySingle($Query,true);		
+		$LeagueGeneral = $db->querySingle($Query,true);	
+		$Query = "Select PlayersMugShotBaseURL, PlayersMugShotFileExtension from LeagueOutputOption";
+		$LeagueOutputOption = $db->querySingle($Query,true);				
 		
 		$LeagueName = $LeagueGeneral['Name'];
 		$PlayerName = $PlayerInfo['Name'];	
@@ -55,7 +57,15 @@ echo "<title>" . $LeagueName . " - " . $PlayerName . "</title>";
 <?php include "Menu.php";?>
 <br />
 
-<div class="STHSPHPPlayerStat_PlayerNameHeader"><?php echo $PlayerName . " - " . $PlayerInfo['TeamName']; ?></div><br />
+<div class="STHSPHPPlayerStat_PlayerNameHeader">
+<?php
+If ($LeagueOutputOption['PlayersMugShotBaseURL'] != "" AND $LeagueOutputOption['PlayersMugShotFileExtension'] != "" AND $PlayerInfo ['NHLID'] != ""){
+	echo "<table class=\"STHSTableFullW STHSPHPPlayerMugShot\"><tr><td>" . $PlayerName . "<br /><br />" . $PlayerInfo['TeamName'];
+	echo "</td><td><img src=\"" . $LeagueOutputOption['PlayersMugShotBaseURL'] . $PlayerInfo['NHLID'] . "." . $LeagueOutputOption['PlayersMugShotFileExtension'] . "\" alt=\"" . $PlayerName . "\" /></td></tr></table>";
+}else{
+	echo $PlayerName . " - " . $PlayerInfo['TeamName'];
+}
+ ?></div><br />
 
 <div class="STHSPHPPlayerStat_Main">
 <br />
