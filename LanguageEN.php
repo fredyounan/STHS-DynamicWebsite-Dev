@@ -52,6 +52,7 @@ $ScheduleLang = array(
 'Score'			=> 'Score',
 'Link'			=> 'Link',
 'BoxScore'			=> 'BoxScore',
+'TradeDeadline'		=> 'Trade Deadline --- Trades can’t be done after this day is simulated!'
 );
 
 $SearchLang = array(
@@ -119,6 +120,8 @@ $PlayersLang = array(
 'Information'			=> 'Information',
 'ProStat'			=> 'Pro Stat',
 'FarmStat'			=> 'Farm Stat',
+'CareerProStat'			=> 'Career Pro Stat',
+'CareerFarmStat'			=> 'Career Farm Stat',
 'Basic'			=> ' - Basic',
 'Advanced'			=> ' - Advanced',
 'Country'			=> 'Country',
@@ -131,6 +134,9 @@ $PlayersLang = array(
 'ExcludefromSalaryCap'			=> 'Exclude from Salary Cap',
 'ProSalaryinFarm'			=> 'Pro Salary in Farm / 1 Way Contract',
 'AlreadyResign'			=> 'Already Resign',
+'RegularSeason'			=> 'Regular Season',
+'Playoff'			=> 'Playoff',
+'Total'			=> 'Total',
 );
 
 $DynamicTitleLang = array(
@@ -318,6 +324,8 @@ $TeamLang = array(
 'ControlInDefensifZone'		=> 'Control In Defensive Zone',
 'InNeutralZone'		=> 'In Neutral Zone',
 'ControlInNeutralZone'		=> 'Control In Neutral Zone',
+'CareerTeamStat'			=> 'Career Team Stat',
+'TeamTotalAverage'			=> 'Team Total or Average',
 );
 
 $IndexLang = array(
