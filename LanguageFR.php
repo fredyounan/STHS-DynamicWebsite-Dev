@@ -4,6 +4,7 @@
 $DatabaseNotFound = "La base de donnée n'a pas été trouvée";
 $Footer = "Site web créé par le <a href=\"http://sths.simont.info\">SimonT Hockey Simulator (STHS)</a> pour ";
 $WarningResolution = "La résolution de votre navigateur est trop petite pour cette page. Plusieurs informations sont cachées pour garder la page lisible.";
+$DatabaseCreate = "La base de données a été créé : ";
 
 $TableSorterLang = array(
 'ShoworHideColumn'		=> 'Afficher ou Masquer des Colonnes',
@@ -30,10 +31,10 @@ $WaiverLang  = array(
 );
 
 $CoachesLang = array(
-'CoachesTitle'		=> 'Coachs',
-'ProCoaches'			=> 'Coachs Pro',
-'FarmCoaches'			=> 'Coachs École',
-'AvailableCoaches'			=> 'Coachs Disponibles',
+'CoachesTitle'		=> 'Entraîneurs',
+'ProCoaches'			=> 'Entraîneurs Pro',
+'FarmCoaches'			=> 'Entraîneurs École',
+'AvailableCoaches'			=> 'Entraîneurs Disponibles',
 'CoachesName'			=> 'Nom du Coach',
 'TeamName'			=> 'Nom de l\'Équipe',
 'Age'			=> 'Âge',
@@ -75,6 +76,7 @@ $SearchLang = array(
 'Unlimited'		=> '0 - Illimité',
 'AcsendingOrder'		=> 'Ordre Ascendant:',
 'DecendingOrder'		=> 'Ordre Descendant:',
+'ExpansionDraft'			=> 'Repêchage d\'expansion:',
 'Select'		=> 'Sélectionner',
 'Farm'		=> 'École:',
 'PlayersRosterMenu'		=> 'Menu Formation des Joueurs',
@@ -160,6 +162,7 @@ $DynamicTitleLang = array(
 'Top'			=> ' Meilleur ',
 'IndividualLeadersTitle'		=> 'Meneurs Individuels',
 'FreeAgentStatus'		=> 'Le status des joueurs a été calcul basé sur le date : ',
+'ExpansionDraft'			=> 'Repêchage d\'expansion - ',
 );
 
 $TeamStatLang = array(
@@ -438,6 +441,58 @@ $TeamAndGMLang = array(
 'FailProAutoLine'			=> '# De lignes pro automatiques échoués',
 'FailFarmAutoLine'			=> '# De lignes école automatiques échoués',
 'FailSimulation'			=> '# De simulations échoués',
+);
+
+$TopMenuLang = array(
+'Home'		=> ' Accueil',
+'Main'		=> 'Général',
+'ProLeague'		=> 'Ligue PRO',
+'FarmLeague'		=> 'Ligue Mineure',
+'League'		=> 'Ligue',
+'Records'		=> 'Records',
+'TeamsDirectLink'		=> 'Liens Directs - Équipes',
+'OldWebsitePage'		=> 'Pages web de l\'ancien site',
+'STHSClientLeagueFile'		=> 'Fichier client de ligue STHS',
+'Help'		=> 'Aide',
+'LatestSTHSClient'		=> 'Dernier Client STHS',
+'TodaysGames'		=> 'Matchs du Jour',
+'TodaysTransactions'		=> 'Transactions du Jour',
+'ProSchedule'		=> 'Calendrier PRO',
+'FarmSchedule'		=> 'Calendrier Mineur',
+'Search'		=> 'Recherche',
+'RSSFeed'		=> 'Flux RSS',
+'Standing'		=> 'Classement',
+'PlayersLeader'		=> 'Meneurs - Joueurs',
+'GoaliesLeader'		=> 'Meneurs - Gardiens',
+'IndividualLeaders'		=> 'Meneurs Individuels',
+'AllPlayersStats'		=> 'Statistiques des Joueurs',
+'AllGoaliesStats'		=> 'Statistiques des Gardiens',
+'TeamsStats'		=> 'Statistiques d\'Équipes',
+'PowerRanking'		=> 'Classement de Puissance',
+'Coaches'		=> 'Entraîneurs',
+'Transactions'		=> 'Transactions',
+'Waivers'		=> 'Ballotage',
+'Unassigned'		=> 'Non Assignés',
+'FreeAgents'		=> 'Agents Libres',
+'Players'		=> 'Joueurs',
+'Goalies'		=> 'Gardiens',
+'Team/GM'		=> 'Équipes/DG',
+'TradeHistory'		=> 'Historique de transaction',
+'LeagueRecords'		=> 'Records de ligue',
+'TeamRecords'		=> 'Records d\'équipe',
+'ManualLink'		=> 'ManualV2_Fra.php#Team_Management',
+'ManualLinkTitle'		=> 'Manuel du Client STHS',
+'ExpansionDraft'			=> 'Repêchage d\'expansion',
+'EntryDraft'		=> 'Repêchage Amateur',
+);
+
+$EntryDraftLang = array(
+'EntryDraft'		=> 'Repêchage Amateur',
+'Rank'			=> '# Rang',
+'Team'		=> 'Équipe (De)',
+'Pick'			=> 'Choix',
+'Round'			=> 'Ronde',
+'AvailablesProspect'			=> 'Éspoirs Disponible',
 );
 
  /* End FR Language Pack */

@@ -173,7 +173,7 @@ if ($TeamCareerStatFound == true){
 <?php include "Menu.php";?>
 <br />
 
-<div class="STHSPHPTeamStat_TeamNameHeader"><?php echo $TeamName;?></div><br />
+<div class="STHSPHPTeamStat_TeamNameHeader TeamRosterFarm_<?php echo $TeamInfo['Abbre'] . "\">" . $TeamName;?></div><br />
 <div id="STHSPHPTeamStat_SubHeader" style="font-size:20px;width:99%;text-align:center;margin:auto;">
 <span style="width:60%;float:left;text-align:left;"><?php echo $TeamLang['GM'] . $TeamProInfo['GMName'];?></span> 
 <span style="width:17%;float:left;"><?php echo $TeamLang['Morale'] . $TeamInfo['Morale'];?> </span>

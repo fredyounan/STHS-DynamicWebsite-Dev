@@ -11,6 +11,7 @@ If (file_exists($DatabaseFile) == false){
 	$Title = $DatabaseNotFound;
 }else{
 	$ACSQuery = (boolean)FALSE;/* The SQL Query must be Ascending Order and not Descending */
+	$Expansion = FALSE; /* To show Expension Draft Avaiable Player - Not Apply if Free Agent Option or Unassigned option is also request */
 	$MaximumResult = (integer)0;
 	$OrderByField = (string)"Overall";
 	$OrderByFieldText = (string)"Overall";
@@ -21,12 +22,13 @@ If (file_exists($DatabaseFile) == false){
 	$TitleOverwrite = (string)"";
 	$LeagueName = (string)"";
 	if(isset($_GET['Type'])){$Type = filter_var($_GET['Type'], FILTER_SANITIZE_NUMBER_INT);} 
-	if(isset($_GET['ACS'])){$ACSQuery= TRUE;}
+	if(isset($_GET['ACS'])){$ACSQuery = TRUE;}
 	if(isset($_GET['Max'])){$MaximumResult = filter_var($_GET['Max'], FILTER_SANITIZE_NUMBER_INT);} 
 	if(isset($_GET['Order'])){$OrderByInput  = filter_var($_GET['Order'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH);} 
 	if(isset($_GET['Team'])){$Team = filter_var($_GET['Team'], FILTER_SANITIZE_NUMBER_INT);}
     if(isset($_GET['Title'])){$TitleOverwrite  = filter_var($_GET['Title'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH);} 	
 	if(isset($_GET['FreeAgent'])){$FreeAgentYear = filter_var($_GET['FreeAgent'], FILTER_SANITIZE_NUMBER_INT);} 
+	if(isset($_GET['Expansion'])){$Expansion = TRUE;} 
 
 	$PlayersRosterPossibleOrderField  = array(
 	array("Name","Player Name"),
@@ -73,12 +75,14 @@ If (file_exists($DatabaseFile) == false){
 		$Query = "SELECT * FROM PlayerInfo";
 	}
 		
+	If($Expansion == TRUE){$Title = $DynamicTitleLang['ExpansionDraft'];}
+	
 	/* Team or All */
 	if($Team >= 0){
 		if($Team > 0){
 			$QueryTeam = "SELECT Name FROM TeamProInfo WHERE Number = " . $Team;
 			$TeamName = $db->querySingle($QueryTeam,true);	
-			$Title = $TeamName['Name'];
+			$Title = $Title . $TeamName['Name'];
 		}else{
 			$Title = $DynamicTitleLang['Unassigned'];
 		}
@@ -103,6 +107,9 @@ If (file_exists($DatabaseFile) == false){
 		if($Type == 0 AND $Team == -1){$Query = $Query . " WHERE PlayerInfo.Team > 0";}
 		$Query = $Query . " AND PlayerInfo.Contract = " . $FreeAgentYear; /* Free Agent Query */ 
 		If ($FreeAgentYear == 0){$Title = $Title . $DynamicTitleLang['ThisYearFreeAgents'];}elseIf ($FreeAgentYear == 1){$Title = $Title . $DynamicTitleLang['NextYearFreeAgents'];}else{$Title = $Title . " " . $FreeAgentYear . $DynamicTitleLang['YearsFreeAgents'];}
+	}elseif($Expansion == TRUE){
+		if($Type == 0 AND $Team == -1){$Query = $Query . " WHERE PlayerInfo.Team > 0";}
+		$Query = $Query . " AND PlayerInfo.PProtected = 'False'";
 	}
 	
 	$Title = $Title . $DynamicTitleLang['PlayersRoster'];	
@@ -117,7 +124,7 @@ If (file_exists($DatabaseFile) == false){
 		$Title = $Title . $DynamicTitleLang['InDecendingOrderBy'] . $OrderByFieldText;
 	}
 	If ($MaximumResult > 0){$Query = $Query . " LIMIT " . $MaximumResult;}
-	
+
 	/* Ran Query */	
 	$PlayerRoster = $db->query($Query);
 	
