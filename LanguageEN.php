@@ -484,6 +484,7 @@ $TopMenuLang = array(
 'ManualLinkTitle'		=> 'STHS Client Manual',
 'ExpansionDraft'			=> 'Expansion Draft',
 'EntryDraft'		=> 'Entry Draft',
+'LeagueNewsManagement'		=> 'League News Management',
 );
 
 $EntryDraftLang = array(
@@ -493,6 +494,30 @@ $EntryDraftLang = array(
 'Pick'			=> 'Pick',
 'Round'			=> 'Round',
 'AvailablesProspect'			=> 'Availables Prospect',
+);
+
+$News = array(
+'LeagueNews'		=> 'League News',
+'NewsFrom'	=> 'News From : ',
+'NewsTitle'			=> 'News Title : ',
+'News'			=> 'News : ',
+'Save'			=> 'Save',
+'LeagueManagement'			=> 'Commissioner',
+'EditNews'			=> 'Edit News',
+'CreateNews'			=> 'Create News',
+'LeagueNewsManagement'		=> 'League News Management',
+'ReturnLeagueNewsManagementPage'		=> 'Return League News Management Page',
+'Time'			=> 'Time',
+'By'			=> 'By',
+'Title'			=> 'Title',
+'Action'			=> 'Action',
+'Erase'			=> 'Erase',
+'EditErase'			=> 'Edit or Erase',
+'Password'			=> 'Password : ',
+'WasErase'			=> ' was erased from the database.',
+'ErrorErase'			=> 'An error occurred while deleting!',
+'SaveSuccessfully'		=> 'News Saved Successfully!',
+'IncorrectPassword'			=> 'Incorrect Password!',
 );
 
 /* End EN Language Pack */

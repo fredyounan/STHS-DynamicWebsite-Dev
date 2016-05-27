@@ -484,6 +484,7 @@ $TopMenuLang = array(
 'ManualLinkTitle'		=> 'Manuel du Client STHS',
 'ExpansionDraft'			=> 'Repêchage d\'expansion',
 'EntryDraft'		=> 'Repêchage Amateur',
+'LeagueNewsManagement'		=> 'Gestion des Nouvelles',
 );
 
 $EntryDraftLang = array(
@@ -493,6 +494,30 @@ $EntryDraftLang = array(
 'Pick'			=> 'Choix',
 'Round'			=> 'Ronde',
 'AvailablesProspect'			=> 'Éspoirs Disponible',
+);
+
+$News = array(
+'LeagueNews'		=> 'Nouvelle de la Ligue',
+'NewsFrom'	=> 'Nouvelle de : ',
+'NewsTitle'			=> 'Titre de la Nouvelle : ',
+'News'			=> 'Nouvelle : ',
+'Save'			=> 'Sauvegarder',
+'LeagueManagement'			=> 'Commissaire',
+'EditNews'			=> 'Éditer une nouvelle',
+'CreateNews'			=> 'Créer une nouvelle',
+'LeagueNewsManagement'		=> 'Gestion des Nouvelles de la Ligue',
+'ReturnLeagueNewsManagementPage'		=> 'Retour vers la Gestion des Nouvelles de la Ligue',
+'Time'			=> 'Temps',
+'By'			=> 'Par',
+'Title'			=> 'Titre',
+'Action'			=> 'Action',
+'Erase'			=> 'Effacer',
+'EditErase'			=> 'Éditer ou Effacer',
+'Password'			=> 'Mot de Passe : ',
+'WasErase'			=> ' a été effacé de la base de données.',
+'ErrorErase'			=> 'Une erreur est survenu lors de l\'effacement!',
+'SaveSuccessfully'		=> 'Nouvelles enregistré avec succès!',
+'IncorrectPassword'			=> 'Mot de Passe Incorrect!',
 );
 
  /* End FR Language Pack */
