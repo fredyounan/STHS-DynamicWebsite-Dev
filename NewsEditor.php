@@ -9,6 +9,7 @@ $NewsMessage = (string)"";
 $InformationMessage = (string)"";
 $Owner = (string)"";
 $PasswordIncorrect = (boolean)FALSE;
+$HashMatch = (boolean)FALSE;
 
 If (file_exists($DatabaseFile) == false){
 	$LeagueName = $DatabaseNotFound;
@@ -47,16 +48,20 @@ If (file_exists($DatabaseFile) == false){
 			
 			/* Get Hash */
 			If ($NewsOwner['TeamNumber'] > 0){
-				/* GM News */
-				$CalculateHash = strtoupper(Hash('sha512', ($NewsOwner['GMName'] . $Password)));
-				$DatabaseHash = $NewsOwner['WebPassword'];
-			}else{
-				/* League Management News */
-				$CalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
-				$DatabaseHash = $LeagueGeneral['LeagueWebPassword'];
+				/* GM Hash */
+				$GMCalculateHash = strtoupper(Hash('sha512', ($NewsOwner['GMName'] . $Password)));
+				$GMDatabaseHash = $NewsOwner['WebPassword'];
+				If ($GMCalculateHash == $GMDatabaseHash && $GMDatabaseHash != ""){$HashMatch = True;}
 			}
 			
-			If ($CalculateHash == $DatabaseHash){
+			If ($HashMatch == False){
+				/* League Management Hash for League and also GM News */
+				$LeagueCalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
+				$LeagueDatabaseHash = $LeagueGeneral['LeagueWebPassword'];
+				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
+			}
+			
+			If ($HashMatch == True){
 				/* Delete From Database if Password Match */
 				$InformationMessage = $News['News'] . "\" " . $NewsOwner['Title'] . " \"" . $News['WasErase'];
 				$sql = "Delete from LeagueNews WHERE LeagueNews.Number = " . $NewsID;
@@ -80,16 +85,20 @@ If (file_exists($DatabaseFile) == false){
 			
 			/* Get Hash */
 			If ($NewsOwner['TeamNumber'] > 0){
-				/* GM News */
-				$CalculateHash = strtoupper(Hash('sha512', ($NewsOwner['GMName'] . $Password)));
-				$DatabaseHash = $NewsOwner['WebPassword'];
-			}else{
-				/* League Management News */
-				$CalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
-				$DatabaseHash = $LeagueGeneral['LeagueWebPassword'];
+				/* GM Hash */
+				$GMCalculateHash = strtoupper(Hash('sha512', ($NewsOwner['GMName'] . $Password)));
+				$GMDatabaseHash = $NewsOwner['WebPassword'];
+				If ($GMCalculateHash == $GMDatabaseHash && $GMDatabaseHash != ""){$HashMatch = True;}
 			}
 			
-			If ($CalculateHash == $DatabaseHash){
+			If ($HashMatch == False){
+				/* League Management Hash for League and also GM News */
+				$LeagueCalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
+				$LeagueDatabaseHash = $LeagueGeneral['LeagueWebPassword'];
+				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
+			}
+			
+			If ($HashMatch == True){
 				/* Update Existing NewsID if Password Hash Match */
 				$sql = "UPDATE LeagueNews SET Time = '" . date('Y-m-d H:i:s') . "',Title = '" . filter_var($_POST["Title"], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH) . "',Message = '" . $_POST["editor1"] . "',WebClientModify = 'True' WHERE Number = " . $NewsID;
 				$db->exec($sql);
@@ -109,17 +118,23 @@ If (file_exists($DatabaseFile) == false){
 				$Query = "SELECT GMName, WebPassword FROM TeamProInfo WHERE Number = '" . $NewsTeam . "'";
 				$TeamGM = $db->querySingle($Query,true);
 				$Owner = $TeamGM['GMName'];
-				$CalculateHash = strtoupper(Hash('sha512', ($Owner . $Password)));
-				$DatabaseHash = $TeamGM['WebPassword'];
+				$GMCalculateHash = strtoupper(Hash('sha512', ($Owner . $Password)));
+				$GMDatabaseHash = $TeamGM['WebPassword'];
+				If ($GMCalculateHash == $GMDatabaseHash && $GMDatabaseHash != ""){$HashMatch = True;}
 			}else{
-				/* Get League Password Hash in the Database */
+				/* Setup Information Required Later */
 				$NewsTeam = 0;
 				$Owner = $News['LeagueManagement'];
-				$CalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
-				$DatabaseHash = $LeagueGeneral['LeagueWebPassword'];
 			}
 			
-			If ($CalculateHash == $DatabaseHash){	
+			/* If League Management Wrote News OR Allow League Management Master Password to create News on Behalf of GM */
+			If ($NewsTeam == 0 || $HashMatch == False){
+				$LeagueCalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
+				$LeagueDatabaseHash = $LeagueGeneral['LeagueWebPassword'];
+				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
+			}
+			
+			If ($HashMatch == True){
 				/* Create a new record if Password Hash Match */
 				$sql = "INSERT INTO LeagueNews (Time,TeamNumber,TeamNewsNumber,Owner,Title,Message,Remove,WebClientModify) VALUES('" . date('Y-m-d H:i:s') . "','" . filter_var($_POST["Team"], FILTER_SANITIZE_NUMBER_INT) . "','0','" . $Owner . "','" . filter_var($_POST["Title"], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH) . "','" . $_POST["editor1"] . "','False','True')";
 				$db->exec($sql);
