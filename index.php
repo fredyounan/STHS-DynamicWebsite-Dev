@@ -87,10 +87,14 @@ if (empty($Schedule) == false){while ($row = $Schedule ->fetchArray()) {
 </td><td class="STHSIndex_NewsTD">
 <div class="STHSIndex_TheNews"><?php echo $LeagueName . $IndexLang['News'];?></div>
 <?php
+$UTC = new DateTimeZone("UTC");
+$ServerTimeZone = new DateTimeZone(date_default_timezone_get());
+
 if (empty($LeagueNews) == false){while ($row = $LeagueNews ->fetchArray()) { 
 	echo "<h2>" . $row['Title'] . "</h2>";
-	$RealDateDate = date_create($row['Time']);
-	echo "<strong>" . $IndexLang['By'] . " " . $row['Owner'] . " " . $IndexLang['On'] . " " .  date_Format($RealDateDate,"l jS F Y \a\\t\ g:ia ")  . "</strong><br /><br />";
+	$Date = new DateTime($row['Time'], $UTC );
+	$Date->setTimezone($ServerTimeZone);
+	echo "<strong>" . $IndexLang['By'] . " " . $row['Owner'] . " " . $IndexLang['On'] . " " . $Date->format('l jS F Y \a\\t\ g:ia ')  . "</strong><br /><br />";
 	echo  $row['Message'] . "<br />\n"; /* The \n is for a new line in the HTML Code */
 }}
 ?>

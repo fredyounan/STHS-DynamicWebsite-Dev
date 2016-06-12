@@ -12,7 +12,7 @@ If (file_exists($DatabaseFile) == false){
 		$LeagueGeneral = $db->querySingle($Query,true);		
 		$LeagueName = $LeagueGeneral['Name'];
 	}
-	$Query = "Select ShowExpansionDraftLinkinTopMenu, ShowRSSFeed, OutputCustomURL1, OutputCustomURL1Name, OutputCustomURL2, OutputCustomURL2Name from LeagueOutputOption";
+	$Query = "Select ShowExpansionDraftLinkinTopMenu, ShowWebClientInDymanicWebsite, ShowRSSFeed, OutputCustomURL1, OutputCustomURL1Name, OutputCustomURL2, OutputCustomURL2Name from LeagueOutputOption";
 	$LeagueOutputOptionMenu = $db->querySingle($Query,true);
 	$Query = "Select OutputName, OutputFileFormat, EntryDraftStart, OffSeason, DatabaseCreationDate from LeagueGeneral";
 	$LeagueGeneralMenu = $db->querySingle($Query,true);
@@ -41,11 +41,9 @@ If (file_exists($DatabaseFile) == false){
 <td><a href="<?php echo $LeagueName . ".stc";?>"><?php echo $TopMenuLang['STHSClientLeagueFile'];?></a></td>
 <td><a href="TodayGames.php"><?php echo $TopMenuLang['TodaysGames'];?></a></td>
 <td><a href="Transaction.php?SinceLast"><?php echo $TopMenuLang['TodaysTransactions'];?></a></td>
-<td><a href="Schedule.php"><?php echo $TopMenuLang['ProSchedule'];?></a></td>
-<?php If ($LeagueSimulationMenu['FarmEnable'] == "True"){echo "<td><a href=\"Schedule.php?Farm\">" . $TopMenuLang['FarmSchedule'] . "</a></td>";}?>
 <td><a href="Search.php"><?php echo $TopMenuLang['Search'];?></a></td>
 <td><a href="NewsManagement.php"><?php echo $TopMenuLang['LeagueNewsManagement'];?></a></td>
-<?php
+<?php if ($LeagueOutputOptionMenu['ShowWebClientInDymanicWebsite'] == "True"){echo "<td><a href=\"WebClientIndex.php\">" . $TopMenuLang['WebClient'] . "</a></td>";}
 If ($LeagueOutputOptionMenu['OutputCustomURL1'] != "" and $LeagueOutputOptionMenu['OutputCustomURL1Name'] != ""){echo "<td><a href=\"" . $LeagueOutputOptionMenu['OutputCustomURL1'] . "\">" . $LeagueOutputOptionMenu['OutputCustomURL1Name'] . "</a></td>\n";}
 If ($LeagueOutputOptionMenu['OutputCustomURL2'] != "" and $LeagueOutputOptionMenu['OutputCustomURL2Name'] != ""){echo "<td><a href=\"" . $LeagueOutputOptionMenu['OutputCustomURL2'] . "\">" . $LeagueOutputOptionMenu['OutputCustomURL2Name'] . "</a></td>\n";}
 ?>
@@ -53,6 +51,7 @@ If ($LeagueOutputOptionMenu['OutputCustomURL2'] != "" and $LeagueOutputOptionMen
 <div class="tabmenu" id="tabmenu2">
 <table class="MenuSTHS"><tr>
 <td><a href="Standing.php"><?php echo $TopMenuLang['Standing'];?></a></td>
+<td><a href="Schedule.php"><?php echo $TopMenuLang['Schedule'];?></a></td>
 <td><a href="PlayersStat.php?Order=P&MinGP&Max=50"><?php echo $TopMenuLang['PlayersLeader'];?></a></td>
 <td><a href="GoaliesStat.php?Order=P&MinGP&Max=10"><?php echo $TopMenuLang['GoaliesLeader'];?></a></td>
 <td><a href="IndividualLeaders.php"><?php echo $TopMenuLang['IndividualLeaders'];?></a></td>
@@ -64,6 +63,7 @@ If ($LeagueOutputOptionMenu['OutputCustomURL2'] != "" and $LeagueOutputOptionMen
 <?php If ($LeagueSimulationMenu['FarmEnable'] == "True"){echo "<div class=\"tabmenu\" id=\"tabmenu4\">";}else{echo "<div class=\"tabmenu\" id=\"tabmenu4\" style=\"display:none;\">";}?>
 <table class="MenuSTHS"><tr>
 <td><a href="Standing.php?Farm"><?php echo $TopMenuLang['Standing'];?></a></td>
+<td><a href="Schedule.php?Farm"><?php echo $TopMenuLang['FarmSchedule'];?></a></td>
 <td><a href="PlayersStat.php?Farm&MinGP&Order=P&Max=50"><?php echo $TopMenuLang['PlayersLeader'];?></a></td>
 <td><a href="GoaliesStat.php?Farm&MinGP&Order=P&Max=10"><?php echo $TopMenuLang['GoaliesLeader'];?></a></td>
 <td><a href="IndividualLeaders.php?Farm"><?php echo $TopMenuLang['IndividualLeaders'];?></a></td>

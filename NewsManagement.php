@@ -29,10 +29,14 @@ echo "<title>" . $LeagueName . " - " . $News['LeagueNewsManagement'] . "</title>
 <h1><?php echo $News['EditNews'];?></h1>
 <table class="tablesorter STHSPHPNewsMangement_Table">
 <?php
+$UTC = new DateTimeZone("UTC");
+$ServerTimeZone = new DateTimeZone(date_default_timezone_get());
+
 echo "<thead><tr><th style=\"width:200px;\">" . $News['Time'] . "</th><th style=\"width:200px;\">" . $News['By'] . "</th><th style=\"width:400px;\">" . $News['Title'] . "</th><th class=\"STHSW100\">" . $News['Action'] . "</th></tr></thead><tbody>\n"; 
 if (empty($LeagueNews) == false){while ($row = $LeagueNews ->fetchArray()) { 
-	$RealDateDate = date_create($row['Time']);
-	echo "<tr><td>" . date_Format($RealDateDate,"l jS F Y \a\\t\ g:ia ") . "</td>\n";
+	$Date = new DateTime($row['Time'], $UTC );
+	$Date->setTimezone($ServerTimeZone);
+	echo "<tr><td>" . $Date->format('l jS F Y \a\\t\ g:ia ') . "</td>\n"; 
 	echo "<td>" . $row['Owner'] . "</td>\n";
 	echo "<td>" . $row['Title'] . "</td>\n";
 	echo "<td class=\"STHSCenter\"><a href=\"NewsEditor.php?NewsID=" . $row['Number'] . "\">" . $News['EditErase'] . "</a></td></tr>\n";

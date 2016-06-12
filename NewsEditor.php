@@ -58,7 +58,7 @@ If (file_exists($DatabaseFile) == false){
 				/* League Management Hash for League and also GM News */
 				$LeagueCalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
 				$LeagueDatabaseHash = $LeagueGeneral['LeagueWebPassword'];
-				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
+				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != "" && $LeagueGeneral['LeagueWebPassword'] != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
 			}
 			
 			If ($HashMatch == True){
@@ -95,12 +95,12 @@ If (file_exists($DatabaseFile) == false){
 				/* League Management Hash for League and also GM News */
 				$LeagueCalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
 				$LeagueDatabaseHash = $LeagueGeneral['LeagueWebPassword'];
-				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
+				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != "" && $LeagueGeneral['LeagueWebPassword'] != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
 			}
 			
 			If ($HashMatch == True){
 				/* Update Existing NewsID if Password Hash Match */
-				$sql = "UPDATE LeagueNews SET Time = '" . date('Y-m-d H:i:s') . "',Title = '" . filter_var($_POST["Title"], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH) . "',Message = '" . $_POST["editor1"] . "',WebClientModify = 'True' WHERE Number = " . $NewsID;
+				$sql = "UPDATE LeagueNews SET Title = '" . filter_var($_POST["Title"], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH) . "',Message = '" . $_POST["editor1"] . "',WebClientModify = 'True' WHERE Number = " . $NewsID;
 				$db->exec($sql);
 				$InformationMessage = $News['SaveSuccessfully'];
 			}else{
@@ -131,12 +131,12 @@ If (file_exists($DatabaseFile) == false){
 			If ($NewsTeam == 0 || $HashMatch == False){
 				$LeagueCalculateHash = strtoupper(Hash('sha512', ($LeagueName . $Password)));
 				$LeagueDatabaseHash = $LeagueGeneral['LeagueWebPassword'];
-				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
+				If ($LeagueCalculateHash == $LeagueDatabaseHash && $LeagueDatabaseHash != "" && $LeagueGeneral['LeagueWebPassword'] != ""){$HashMatch = True;} /* Can only match if LeagueWebPassword is not empty */
 			}
 			
 			If ($HashMatch == True){
 				/* Create a new record if Password Hash Match */
-				$sql = "INSERT INTO LeagueNews (Time,TeamNumber,TeamNewsNumber,Owner,Title,Message,Remove,WebClientModify) VALUES('" . date('Y-m-d H:i:s') . "','" . filter_var($_POST["Team"], FILTER_SANITIZE_NUMBER_INT) . "','0','" . $Owner . "','" . filter_var($_POST["Title"], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH) . "','" . $_POST["editor1"] . "','False','True')";
+				$sql = "INSERT INTO LeagueNews (Time,TeamNumber,TeamNewsNumber,Owner,Title,Message,Remove,WebClientModify) VALUES('" . gmdate('Y-m-d H:i:s') . "','" . filter_var($_POST["Team"], FILTER_SANITIZE_NUMBER_INT) . "','0','" . $Owner . "','" . filter_var($_POST["Title"], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW || FILTER_FLAG_STRIP_HIGH) . "','" . $_POST["editor1"] . "','False','True')";
 				$db->exec($sql);
 				$InformationMessage = $News['SaveSuccessfully'];
 				
@@ -234,6 +234,7 @@ form { display: inline; }
 	
 	<br />
 	<h1><a href="NewsManagement.php"><?php echo $News['ReturnLeagueNewsManagementPage'];?></a></h1>
+	<br /><strong>Note:</strong><br /><em><?php echo $News['TeamNotePassword1'] . "<br />" . $News['TeamNotePassword2'];?></em>
 </div>
 
 <?php include "Footer.php";?>

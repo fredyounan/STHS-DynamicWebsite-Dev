@@ -1,7 +1,7 @@
 <?php
-	include "STHSSetting.php";
+	require_once("STHSSetting.php");
 	$lang = "en"; 
-	include 'LanguageEN.php'; 
+	require_once("LanguageEN.php");
 	$LeagueName = (string) "";
 
 	require_once("WebClientAPI.php");
@@ -16,20 +16,22 @@
 	// Make a connection variable to pass to API
 	$db = api_sqlite_connect($DatabaseFile);
 
-	// Make a default header 
-	api_layout_header("lineeditor",$db,$WebClientHeadCode);
-	
-	include "Menu.php";
-
 	// Look for a team ID in the URL, if non exists use 0
 	$t = (isset($_REQUEST["TeamID"])) ? $_REQUEST["TeamID"] : 0;
 	$l = (isset($_REQUEST["League"])) ? $_REQUEST["League"] : false;
 
+	// Make a default header 
+	api_layout_header("lineeditor",$db,$t,$l,$WebClientHeadCode);
+	
+	include "Menu.php";
+
 	// Display the line editor page using API.
-	api_pageinfo_editor_lines($db,$t,$l,False);
+	// use 5 paramaters Database, TeamID, $league("Pro","Farm"), showTeamDropdown (DEFAULT true/false), showH1Tag (DEFAULT true/false)   
+	api_pageinfo_editor_lines($db,$t,$l);
 
 	// Close the db connection
 	$db->close();
+
 
 	// Display the default footer.
 	include "Footer.php";

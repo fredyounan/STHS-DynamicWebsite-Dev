@@ -1,7 +1,7 @@
 <?php
-	include "STHSSetting.php";
+	require_once("STHSSetting.php");
 	$lang = "en"; 
-	include 'LanguageEN.php'; 
+	require_once("LanguageEN.php");
 	$LeagueName = (string) "";
 
 	require_once("WebClientAPI.php");
@@ -15,17 +15,19 @@
 	
 	// Make a connection variable to pass to API
 	$db = api_sqlite_connect($DatabaseFile);
-
-	// Make a default header 
-	api_layout_header("rostereditor",$db,$WebClientHeadCode);
 	
-	include "Menu.php";
-
 	// Look for a team ID in the URL, if non exists use 0
 	$t = (isset($_REQUEST["TeamID"])) ? $_REQUEST["TeamID"] : 0;
 
+	// Make a default header 
+	// 5 Paramaters. PageID, database, teamid, League = Pro/Farm, $headcode (custom headercode can be added. DEFAULT "")
+	api_layout_header("rostereditor",$db,$t,false,$WebClientHeadCode);
+
+	include "Menu.php";
+	
 	// Display the roster editor page using API.
-	api_pageinfo_editor_roster($db,$t,False);
+	// use 4 paramaters Database, TeamID, showTeamDropdown (DEFAULT true/false), showH1Tag (DEFAULT true/false)   
+	api_pageinfo_editor_roster($db,$t);
 
 	// Close the db connection
 	$db->close();
