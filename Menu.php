@@ -68,7 +68,7 @@ If ($LeagueOutputOptionMenu['OutputCustomURL2'] != "" and $LeagueOutputOptionMen
 ?>
 <table class="MenuSTHS"><tr>
 <td><a href="Standing.php?Farm"><?php echo $TopMenuLang['Standing'];?></a></td>
-<td><a href="Schedule.php?Farm"><?php echo $TopMenuLang['FarmSchedule'];?></a></td>
+<td><a href="Schedule.php?Farm"><?php echo $TopMenuLang['Schedule'];?></a></td>
 <td><a href="PlayersStat.php?Farm&MinGP&Order=P&Max=50"><?php echo $TopMenuLang['PlayersLeader'];?></a></td>
 <td><a href="GoaliesStat.php?Farm&MinGP&Order=P&Max=10"><?php echo $TopMenuLang['GoaliesLeader'];?></a></td>
 <td><a href="IndividualLeaders.php?Farm"><?php echo $TopMenuLang['IndividualLeaders'];?></a></td>
@@ -88,6 +88,7 @@ If ($LeagueOutputOptionMenu['OutputCustomURL2'] != "" and $LeagueOutputOptionMen
 <?php if ($LeagueOutputOptionMenu['ShowExpansionDraftLinkinTopMenu'] == "True"){echo "<td><span class=\"MenuSTHSSpan\">" . $TopMenuLang['ExpansionDraft'] . ": <a href=\"PlayersRoster.php?Expansion\" style=\"padding-right:0px;padding-left:0px;\">" . $TopMenuLang['Players'] . "</a> / <a href=\"GoaliesRoster.php?Expansion\" style=\"padding-left:0px\">" . $TopMenuLang['Goalies'] . "</a></span></td>";}?>
 <td><a href="TeamsAndGMInfo.php"><?php echo $TopMenuLang['Team/GM'];?></a></td>
 <td><a href="Transaction.php?TradeHistory"><?php echo $TopMenuLang['TradeHistory'];?></a></td>
+<td><a href="Prospects.php"><?php echo $TopMenuLang['Prospects'];?></a></td>
 <?php if ($LeagueOutputOptionMenu['ShowRSSFeed'] == "True"){echo "<td><a href=\"RSSFeed.xml\">" . $TopMenuLang['RSSFeed'] ."</a></td>";}?>
 <td class="STHSW1"></td></tr></table></div>
 <div class="tabmenu<?php if($Active ==5){echo " active";}?>" id="tabmenu5">
