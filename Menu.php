@@ -9,21 +9,22 @@ If (file_exists($DatabaseFile) == false){
 	$TeamProMenu = Null;
 	$TeamFarmMenu = Null;
 }else{
+	$dbMenu = new SQLite3($DatabaseFile);
 	If ($LeagueName == ""){
 		$Query = "Select Name, LastTransactionOutput from LeagueGeneral";
-		$LeagueGeneral = $db->querySingle($Query,true);		
+		$LeagueGeneral = $dbMenu->querySingle($Query,true);		
 		$LeagueName = $LeagueGeneral['Name'];
 	}
 	$Query = "Select ShowExpansionDraftLinkinTopMenu, ShowWebClientInDymanicWebsite, ShowRSSFeed, OutputCustomURL1, OutputCustomURL1Name, OutputCustomURL2, OutputCustomURL2Name from LeagueOutputOption";
-	$LeagueOutputOptionMenu = $db->querySingle($Query,true);
+	$LeagueOutputOptionMenu = $dbMenu->querySingle($Query,true);
 	$Query = "Select OutputName, OutputFileFormat, EntryDraftStart, OffSeason, DatabaseCreationDate from LeagueGeneral";
-	$LeagueGeneralMenu = $db->querySingle($Query,true);
+	$LeagueGeneralMenu = $dbMenu->querySingle($Query,true);
 	$Query = "Select FarmEnable, WaiversEnable from LeagueSimulation";
-	$LeagueSimulationMenu = $db->querySingle($Query,true);	
+	$LeagueSimulationMenu = $dbMenu->querySingle($Query,true);	
 	$Query = "Select Number, Abbre from TeamProInfo ORDER BY Name";
-	$TeamProMenu = $db->query($Query);	
+	$TeamProMenu = $dbMenu->query($Query);	
 	$Query = "Select Number, Abbre from TeamFarmInfo ORDER BY Name";
-	$TeamFarmMenu = $db->query($Query);	
+	$TeamFarmMenu = $dbMenu->query($Query);	
 	
 	if ($LeagueGeneralMenu['OffSeason'] == "True"){$MenuFreeAgentYear = 0;}
 }

@@ -480,7 +480,7 @@ if (empty($CoachInfo) == false){
 include "PlayersStatSub.php";
 If ($PlayerStatTeam['SumOfGP'] > 0){
 	echo "</tbody><tbody class=\"tablesorter-no-sort\">";
-	echo "<tr><td style=\"text-align:right;font-weight:bold\">" . $TeamLang['TeamTotalAverage'] . "</td><td></td>";
+	echo "<tr><td style=\"text-align:right;font-weight:bold\">" . $TeamLang['TeamTotalAverage'] . "</td><td></td><td></td>";
 	echo "<td>" . $PlayerStatTeam['SumOfGP'] . "</td>";
 	echo "<td>" . $PlayerStatTeam['SumOfG'] . "</td>";
 	echo "<td>" . $PlayerStatTeam['SumOfA'] . "</td>";
@@ -541,7 +541,7 @@ If ($PlayerStatTeam['SumOfGP'] > 0){
 include "GoaliesStatSub.php";
 If ($PlayerStatTeam['SumOfGP'] > 0){
 	echo "</tbody><tbody class=\"tablesorter-no-sort\">";
-	echo "<tr><td style=\"text-align:right;font-weight:bold\">" . $TeamLang['TeamTotalAverage'] . "</td>";
+	echo "<tr><td style=\"text-align:right;font-weight:bold\">" . $TeamLang['TeamTotalAverage'] . "</td><td></td>";
 	echo "<td>" . $GoalieStatTeam['SumOfGP'] . "</td>";
 	echo "<td>" . $GoalieStatTeam['SumOfW'] . "</td>";
 	echo "<td>" . $GoalieStatTeam['SumOfL'] . "</td>";
