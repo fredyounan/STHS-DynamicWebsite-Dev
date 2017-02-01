@@ -34,15 +34,16 @@ If (file_exists($DatabaseFile) == false){
 <th>CalculateHash</th>
 </tr></thead><tbody>
 <?php
-	$CalculateHash = strtoupper(Hash('sha512',$LeagueGeneral['Name'] . "Simont"));
-	echo "<tr><td>League</td>\n";
-	If ($CalculateHash == $LeagueGeneral['LeagueWebPassword']){echo "<td style=\"background-color:green\">MATCH</td>\n";}else{echo "<td style=\"background-color:red\">NOT MATCH</td>\n";}
-	echo "<td>" . $LeagueGeneral['LeagueWebPassword'] . "</td>\n";
-	echo "<td>" . $CalculateHash . "</td>\n";
-	echo "</tr>";
+mb_internal_encoding("UTF-8");
+$CalculateHash = strtoupper(Hash('sha512',mb_convert_encoding($LeagueGeneral['Name'] . "mayonaise", 'ASCII')));
+echo "<tr><td>League</td>\n";
+If ($CalculateHash == $LeagueGeneral['LeagueWebPassword']){echo "<td style=\"background-color:green\">MATCH</td>\n";}else{echo "<td style=\"background-color:red\">NOT MATCH</td>\n";}
+echo "<td>" . $LeagueGeneral['LeagueWebPassword'] . "</td>\n";
+echo "<td>" . $CalculateHash . "</td>\n";
+echo "</tr>";
 
 if (empty($ProTeam ) == false){while ($row = $ProTeam  ->fetchArray()) { 
-	$CalculateHash = strtoupper(Hash('sha512',$row['GMName'] . $row['Name']));
+	$CalculateHash = strtoupper(Hash('sha512',mb_convert_encoding($row['GMName'] . $row['Name'], 'ASCII')));
 	echo "<tr><td>" . $row['Name'] . "</td>\n";
 	If ($CalculateHash == $row['WebPassword']){echo "<td style=\"background-color:green\">MATCH</td>\n";}else{echo "<td style=\"background-color:red\">NOT MATCH</td>\n";}	
 	echo "<td>" . $row['WebPassword'] . "</td>\n";
